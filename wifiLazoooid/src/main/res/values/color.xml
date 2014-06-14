@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="brown_background">#FCF3E1</color>
+    <color name="brown_bar">#CCA879</color>
+    <color name="brown_highlight_bar">#b0863d</color>
+    <color name="brown_light">#FFFDFD</color>
+    <color name="brown_trasparent">#50CCA879</color>
+    <color name="grey">#898989</color>
+    <color name="darker_grey">#909090</color>
+
+</resources>
