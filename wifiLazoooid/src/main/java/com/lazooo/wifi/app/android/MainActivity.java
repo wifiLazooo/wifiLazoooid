@@ -16,23 +16,17 @@
 package com.lazooo.wifi.app.android;
 
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lazooo.wifi.app.android.components.SlidingTabs;
-import com.lazooo.wifi.app.android.view.MainPageLayout;
+import com.lazooo.wifi.app.android.views.MainPageLayout;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -45,15 +39,11 @@ public class MainActivity extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_articles);
-        initializeDummy();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         SlidingTabs fragment = WifiLazooo.getApplication().getmMainTab();
         transaction.replace(R.id.sample_content_fragment, fragment);
         transaction.commit();
-        this.getSupportActionBar().setDisplayShowCustomEnabled(true);
-        this.getSupportActionBar().setDisplayShowTitleEnabled(false);
-        this.getSupportActionBar().setCustomView(WifiLazooo.getApplication().getmTitle());
-
+        initializeDummy();
     }
 
     @Override
@@ -64,6 +54,9 @@ public class MainActivity extends ActionBarActivity {
     private void initializeDummy(){
 
         mActionBar = getSupportActionBar();
+        mActionBar.setDisplayShowCustomEnabled(true);
+        mActionBar.setDisplayShowTitleEnabled(false);
+        mActionBar.setCustomView(WifiLazooo.getApplication().getmTitle());
         mActionBar.setTitle("Home");
         mMainPageLayout =(MainPageLayout) findViewById(R.id.sample_main_layout);
 
@@ -71,7 +64,6 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onMenuOpened(int featureId, Menu menu) {
-        Toast.makeText(this, "fava", Toast.LENGTH_SHORT).show();
         return super.onMenuOpened(featureId, menu);
     }
 

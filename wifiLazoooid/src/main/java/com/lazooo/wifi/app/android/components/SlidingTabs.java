@@ -2,13 +2,10 @@ package com.lazooo.wifi.app.android.components;/**
  * Lazooo copyright 2012
  */
 
-import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -16,13 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lazooo.wifi.app.android.R;
 import com.lazooo.wifi.app.android.WifiLazooo;
-import com.lazooo.wifi.app.android.view.SlidingTabLayout;
+import com.lazooo.wifi.app.android.views.SlidingTabLayout;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -51,6 +46,7 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tabs = WifiLazooo.getApplication().getmMainTab().tabs;
+
 
     }
 

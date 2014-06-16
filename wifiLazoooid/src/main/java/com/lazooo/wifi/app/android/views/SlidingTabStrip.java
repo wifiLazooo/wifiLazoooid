@@ -1,4 +1,4 @@
-package com.lazooo.wifi.app.android.view;
+package com.lazooo.wifi.app.android.views;
 
 import android.content.Context;
 import android.graphics.Canvas;

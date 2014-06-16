@@ -1,4 +1,4 @@
-<com.lazooo.wifi.app.android.view.MainPageLayout
+<com.lazooo.wifi.app.android.views.MainPageLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -11,4 +11,4 @@
         android:layout_width="match_parent"
         android:layout_height="0px" />
 
-</com.lazooo.wifi.app.android.view.MainPageLayout>
+</com.lazooo.wifi.app.android.views.MainPageLayout>
