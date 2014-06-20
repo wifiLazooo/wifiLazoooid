@@ -5,7 +5,7 @@
     <color name="brown_highlight_bar">#b0863d</color>
     <color name="brown_light">#FFFDFD</color>
     <color name="brown_trasparent">#50CCA879</color>
-    <color name="grey">#898989</color>
+    <color name="grey">#BB898989</color>
     <color name="darker_grey">#909090</color>
 
 </resources>

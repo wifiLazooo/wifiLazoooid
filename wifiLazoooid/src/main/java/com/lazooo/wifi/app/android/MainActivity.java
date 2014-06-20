@@ -40,10 +40,10 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_articles);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        SlidingTabs fragment = WifiLazooo.getApplication().getmMainTab();
+        SlidingTabs fragment = new SlidingTabs();
         transaction.replace(R.id.sample_content_fragment, fragment);
         transaction.commit();
-        initializeDummy();
+        //initializeDummy();
     }
 
     @Override
@@ -72,8 +72,8 @@ public class MainActivity extends ActionBarActivity {
         // Inflate the menu items for use in the action bar
         //new MenuInflater(getApplication()).inflate(R.menu.main_actions, menu);
 
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_actions, menu);
+        //MenuInflater inflater = getMenuInflater();
+        //inflater.inflate(R.menu.main_actions, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

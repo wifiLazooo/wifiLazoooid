@@ -1,4 +1,6 @@
-package com.lazooo.wifi.app.android.views;
+package com.lazooo.wifi.app.android.views;/**
+ * Lazooo copyright 2012
+ */
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -12,11 +14,19 @@ import android.widget.LinearLayout;
 
 import com.lazooo.wifi.app.android.R;
 
-class SlidingTabStrip extends LinearLayout {
+/**
+ * @author giok57
+ * @email gioelemeoni@gmail.com
+ * @modifiedBy giok57
+ * <p/>
+ * Date: 19/06/14
+ * Time: 00:05
+ */
+public class VerticalTabStrip extends LinearLayout {
 
     private static final int DEFAULT_BOTTOM_BORDER_THICKNESS_DIPS = 2;
     private static final byte DEFAULT_BOTTOM_BORDER_COLOR_ALPHA = 0x0;
-    private static final int SELECTED_INDICATOR_THICKNESS_DIPS = 6;
+    private static final int SELECTED_INDICATOR_THICKNESS_DIPS = 4;
     private static final int DEFAULT_SELECTED_INDICATOR_COLOR = 0xFFCCA879;
 
     private static final int DEFAULT_DIVIDER_THICKNESS_DIPS = 2;
@@ -37,14 +47,14 @@ class SlidingTabStrip extends LinearLayout {
     private int mSelectedPosition;
     private float mSelectionOffset;
 
-    private SlidingTabLayout.TabColorizer mCustomTabColorizer;
+    private VerticalTabLayout.TabColorizer mCustomTabColorizer;
     private final SimpleTabColorizer mDefaultTabColorizer;
 
-    SlidingTabStrip(Context context) {
+    VerticalTabStrip(Context context) {
         this(context, null);
     }
 
-    SlidingTabStrip(Context context, AttributeSet attrs) {
+    VerticalTabStrip(Context context, AttributeSet attrs) {
 
         super(context, attrs);
         setWillNotDraw(false);
@@ -62,6 +72,7 @@ class SlidingTabStrip extends LinearLayout {
         mDefaultTabColorizer.setIndicatorColors(DEFAULT_SELECTED_INDICATOR_COLOR);
         mDefaultTabColorizer.setDividerColors(getResources().getColor(R.color.brown_trasparent));
 
+        setOrientation(VERTICAL);
         mBottomBorderThickness = (int) (DEFAULT_BOTTOM_BORDER_THICKNESS_DIPS * density);
         mBottomBorderPaint = new Paint();
         mBottomBorderPaint.setColor(mDefaultBottomBorderColor);
@@ -73,7 +84,7 @@ class SlidingTabStrip extends LinearLayout {
         mDividerPaint.setStrokeWidth((int) (DEFAULT_DIVIDER_THICKNESS_DIPS * density));
     }
 
-    void setCustomTabColorizer(SlidingTabLayout.TabColorizer customTabColorizer) {
+    void setCustomTabColorizer(VerticalTabLayout.TabColorizer customTabColorizer) {
         mCustomTabColorizer = customTabColorizer;
         invalidate();
     }
@@ -103,13 +114,13 @@ class SlidingTabStrip extends LinearLayout {
         final int height = getHeight();
         final int childCount = getChildCount();
         final int dividerHeightPx = (int) (Math.min(Math.max(0f, mDividerHeight), 1f) * height);
-        final SlidingTabLayout.TabColorizer tabColorizer = mCustomTabColorizer != null
+        final VerticalTabLayout.TabColorizer tabColorizer = mCustomTabColorizer != null
                 ? mCustomTabColorizer
                 : mDefaultTabColorizer;
 
         final float density = getResources().getDisplayMetrics().density;
         int round = (int) (SELECTED_INDICATOR_THICKNESS_DIPS * density) / 2;
-        int quarterWidth = getWidth() / 48;
+        int quarterWidth = getWidth() /96;
         // Thick colored underline below the current selection
         if (childCount > 0) {
             View selectedTitle = getChildAt(mSelectedPosition);
@@ -133,13 +144,13 @@ class SlidingTabStrip extends LinearLayout {
 
             mSelectedIndicatorPaint.setColor(color);
 
-            RectF rectF = new RectF(left+quarterWidth, height - mSelectedIndicatorThickness, right-quarterWidth, height);
-            //canvas.drawRoundRect(rectF, round, round, mSelectedIndicatorPaint);
+            RectF rectF = new RectF(left, 0, right, mSelectedIndicatorThickness);
+            canvas.drawRoundRect(rectF, 0, 0, mSelectedIndicatorPaint);
         }
 
         // Thin underline along the entire bottom edge
-        RectF rectF = new RectF(quarterWidth, height - mBottomBorderThickness, getWidth()-quarterWidth, height);
-        //canvas.drawRoundRect(rectF, round, round, mBottomBorderPaint);
+        RectF rectF = new RectF(0, 0, getWidth(), mBottomBorderThickness);
+        canvas.drawRoundRect(rectF, 0, 0, mBottomBorderPaint);
 
         // Vertical separators between the titles
         int separatorTop = (height - dividerHeightPx) / 2;
@@ -173,7 +184,7 @@ class SlidingTabStrip extends LinearLayout {
         return Color.rgb((int) r, (int) g, (int) b);
     }
 
-    private static class SimpleTabColorizer implements SlidingTabLayout.TabColorizer {
+    private static class SimpleTabColorizer implements VerticalTabLayout.TabColorizer {
         private int[] mIndicatorColors;
         private int[] mDividerColors;
 

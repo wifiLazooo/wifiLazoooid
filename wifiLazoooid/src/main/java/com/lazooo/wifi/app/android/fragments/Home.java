@@ -36,7 +36,8 @@ public class Home extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        Toast.makeText(getActivity(), "onCreate", Toast.LENGTH_SHORT).show();
+        setRetainInstance(true);
+        Toast.makeText(getActivity(), "onCreateHome", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -48,60 +49,43 @@ public class Home extends Fragment {
         Toast.makeText(getActivity(), "onCreateView", Toast.LENGTH_SHORT).show();
         View rootView = inflater.inflate(
                 R.layout.fragment_home, container, false);
-        Bundle args = getArguments();
-        final LinearLayout llMainHolder = (LinearLayout) rootView.findViewById(R.id.llMainHolder);
-        final ImageView iv = (ImageView) rootView.findViewById(R.id.iv);
-        final TextView tvTitle = (TextView) rootView.findViewById(R.id.tvTitle);
-        llMain = (LinearLayout) rootView.findViewById(R.id.llMain);
-        final ListView listView = (ListView) rootView.findViewById(R.id.home_search_list);
-        HomeSearchItem[] items = { new HomeSearchItem("Around you", "N"), new HomeSearchItem("Search", "S"), new HomeSearchItem("Open the map", "V"), new HomeSearchItem("Explore Perugia", ">")};
-        listView.setAdapter(new CustomAdapter(getActivity(), R.layout.home_search_item, items));
-        anotherView = (AnotherView) rootView.findViewById(R.id.anotherView);
-        listView.post(new Runnable() {
 
-            @Override
-            public void run() {
-
-                // Adjusts llMain's height to match ListView's height
-                setListViewHeight(listView, llMain);
-
-                // LayoutParams to set the top margin of LinearLayout holding
-                // the content.
-                // topMargin = iv.getHeight() - tvTitle.getHeight()
-                LinearLayout.LayoutParams p =
-                        (LinearLayout.LayoutParams)llMainHolder.getLayoutParams();
-                p.topMargin = iv.getHeight() - tvTitle.getHeight();
-                llMainHolder.setLayoutParams(p);
-            }
-        });
         return rootView;
     }
 
     @Override
     public void onAttach(Activity activity){
-        Toast.makeText(getActivity(), "onAttach", Toast.LENGTH_SHORT).show();
         super.onAttach(activity);
+
+        Toast.makeText(getActivity(), "onAttach", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onResume(){
+        super.onResume();
 
         Toast.makeText(getActivity(), "onResume", Toast.LENGTH_SHORT).show();
-        super.onResume();
     }
 
     public void onStart(){
+        super.onStart();
 
         Toast.makeText(getActivity(), "onStart", Toast.LENGTH_SHORT).show();
-        super.onStart();
     }
 
     @Override
     public void onViewStateRestored(Bundle bundle){
+        super.onViewStateRestored(bundle);
 
         Toast.makeText(getActivity(), "onViewStateRestored", Toast.LENGTH_SHORT).show();
-        super.onViewStateRestored(bundle);
+    }
+
+    @Override
+    public void onDestroy(){
+
+        Toast.makeText(getActivity(), "onDestroy", Toast.LENGTH_SHORT).show();
+        super.onDestroy();
     }
 
     // Sets the ListView holder's height

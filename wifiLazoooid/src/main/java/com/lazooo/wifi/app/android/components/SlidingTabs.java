@@ -5,7 +5,7 @@ package com.lazooo.wifi.app.android.components;/**
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -13,11 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lazooo.wifi.app.android.R;
 import com.lazooo.wifi.app.android.WifiLazooo;
-import com.lazooo.wifi.app.android.views.SlidingTabLayout;
+import com.lazooo.wifi.app.android.views.HorizontalTabLayout;
+import com.lazooo.wifi.app.android.views.TabLayout;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -34,12 +37,11 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
 
     private List<SlidingTabs.TabItem> tabs;
 
-    private SlidingTabLayout mSlidingTabLayout;
+    private TabLayout mHorizontalTabLayout;
 
     private ViewPager mViewPager;
 
     private ActionBar mActionBar;
-    private SamplePagerAdapter samplePagerAdapter;
 
     List<TabItem> mTabs;
     @Override
@@ -54,21 +56,22 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mActionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
-        return inflater.inflate(R.layout.fragment_sample, container, false);
+        return inflater.inflate(R.layout.fragment_main_tabs, container, false);
 
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-        samplePagerAdapter = new SamplePagerAdapter(getFragmentManager());
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
-        mViewPager.setAdapter(samplePagerAdapter);
-        mSlidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs);
-        mSlidingTabLayout.setViewPager(mViewPager);
-        mSlidingTabLayout.populateTabStrip(tabs);
-        mSlidingTabLayout.setOnPageChangeListener(this);
+        mViewPager.setAdapter(new SamplePagerAdapter(getFragmentManager()));
+        mHorizontalTabLayout = (TabLayout) view.findViewById(R.id.sliding_tabs);
+        mHorizontalTabLayout.addView();
+        mHorizontalTabLayout.setViewPager(mViewPager);
+        mHorizontalTabLayout.populateTabStrip(tabs);
+        mHorizontalTabLayout.setOnPageChangeListener(this);
         mActionBar.setTitle(tabs.get(0).name);
+        mViewPager.setCurrentItem(0);
         // END_INCLUDE (setup_slidingtablayout)
 
     }
@@ -97,26 +100,37 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
     }
 
 
-    public class SamplePagerAdapter extends FragmentPagerAdapter {
+    public class SamplePagerAdapter extends FragmentStatePagerAdapter {
+        List<Fragment> fragments;
         public SamplePagerAdapter(FragmentManager fm) {
             super(fm);
+            fragments = new LinkedList<Fragment>();
         }
+
 
         @Override
         public Fragment getItem(int i){
 
+            Toast.makeText(getActivity(), "getItem  "+i, Toast.LENGTH_SHORT).show();
+
+            if(fragments.size() > i){
+
+                return fragments.get(i);
+            }
             Fragment fragment = null;
             try {
 
-                fragment =(Fragment) tabs.get(i).fragment.newInstance();
+                fragment = (Fragment)tabs.get(i).getFragment().newInstance();
                 Bundle args = new Bundle();
                 args.putInt("object", i + 1);
                 fragment.setArguments(args);
+                fragments.set(i, fragment);
             }catch (Exception e){
 
             }
             return fragment;
         }
+
 
         @Override
         public int getCount() {
@@ -128,6 +142,8 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
 
             return "OBJECT " + (position + 1);
         }
+
+
     }
 
 
