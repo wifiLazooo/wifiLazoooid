@@ -37,7 +37,6 @@ public class Home extends Fragment {
 
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        Toast.makeText(getActivity(), "onCreateHome", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -46,7 +45,6 @@ public class Home extends Fragment {
 
         // The last two arguments ensure LayoutParams are inflated
         // properly.
-        Toast.makeText(getActivity(), "onCreateView", Toast.LENGTH_SHORT).show();
         View rootView = inflater.inflate(
                 R.layout.fragment_home, container, false);
 
@@ -57,7 +55,6 @@ public class Home extends Fragment {
     public void onAttach(Activity activity){
         super.onAttach(activity);
 
-        Toast.makeText(getActivity(), "onAttach", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -65,26 +62,22 @@ public class Home extends Fragment {
     public void onResume(){
         super.onResume();
 
-        Toast.makeText(getActivity(), "onResume", Toast.LENGTH_SHORT).show();
     }
 
     public void onStart(){
         super.onStart();
 
-        Toast.makeText(getActivity(), "onStart", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onViewStateRestored(Bundle bundle){
         super.onViewStateRestored(bundle);
 
-        Toast.makeText(getActivity(), "onViewStateRestored", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDestroy(){
 
-        Toast.makeText(getActivity(), "onDestroy", Toast.LENGTH_SHORT).show();
         super.onDestroy();
     }
 

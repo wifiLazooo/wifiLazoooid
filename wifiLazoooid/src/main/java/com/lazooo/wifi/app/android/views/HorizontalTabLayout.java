@@ -1,6 +1,7 @@
 package com.lazooo.wifi.app.android.views;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.support.v4.view.PagerAdapter;
@@ -13,6 +14,7 @@ import android.widget.IconTextView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import com.lazooo.wifi.app.android.R;
+import com.lazooo.wifi.app.android.WifiLazooo;
 import com.lazooo.wifi.app.android.components.SlidingTabs;
 import java.util.List;
 
@@ -63,7 +65,7 @@ public class HorizontalTabLayout extends TabLayout {
         // Make sure that the Tab Strips fills this View
         setFillViewport(true);
 
-        setBackgroundResource(R.color.brown_background);
+        setBackgroundResource(R.color.brown_background_trans);
 
         mTitleOffset = (int) (TITLE_OFFSET_DIPS * getResources().getDisplayMetrics().density);
 

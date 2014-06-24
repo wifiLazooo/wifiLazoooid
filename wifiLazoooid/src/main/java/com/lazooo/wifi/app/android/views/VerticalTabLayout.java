@@ -1,17 +1,23 @@
 package com.lazooo.wifi.app.android.views;
 
+import android.app.ActionBar;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.IconTextView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.lazooo.wifi.app.android.R;
+import com.lazooo.wifi.app.android.WifiLazooo;
 import com.lazooo.wifi.app.android.components.SlidingTabs;
 import java.util.List;
 
@@ -56,7 +62,7 @@ public class VerticalTabLayout extends TabLayout {
         // Make sure that the Tab Strips fills this View
         setFillViewport(true);
 
-        setBackgroundResource(R.color.brown_background);
+        setBackgroundResource(R.color.brown_background_trans);
 
         mTitleOffset = (int) (TITLE_OFFSET_DIPS * getResources().getDisplayMetrics().density);
 
@@ -122,7 +128,10 @@ public class VerticalTabLayout extends TabLayout {
             // If we're running on ICS or newer, enable all-caps to match the Action Bar tab style
             textView.setAllCaps(true);
         }
-        int tabHeight = mHeight / mViewPager.getAdapter().getCount();
+        //todo fix it
+        int barheight = (int) (74 * getResources().getDisplayMetrics().density + 0.5f);
+        int height = mHeight < mWidth ? mHeight: mWidth;
+        int tabHeight = (height - barheight) / mViewPager.getAdapter().getCount();
         int iconWidth = (int) (TAB_ICON_HEIGHT * getResources().getDisplayMetrics().density);
         int leftRightPadding = (int) (TAB_LEFT_PADDING_DIPS * getResources().getDisplayMetrics().density);
         //int padding = tabWidth - iconWidth / 2;
@@ -173,14 +182,13 @@ public class VerticalTabLayout extends TabLayout {
 
         View selectedChild = mTabStrip.getChildAt(tabIndex);
         if (selectedChild != null) {
-            int targetScrollX = selectedChild.getLeft() + positionOffset;
+            int targetScrollY = selectedChild.getTop() + positionOffset;
 
             if (tabIndex > 0 || positionOffset > 0) {
                 // If we're not at the first child and are mid-scroll, make sure we obey the offset
-                targetScrollX -= mTitleOffset;
+                targetScrollY -= mTitleOffset;
             }
-
-            scrollTo(targetScrollX, 0);
+            scrollTo(0, targetScrollY);
         }
     }
 
@@ -235,7 +243,6 @@ public class VerticalTabLayout extends TabLayout {
                 mViewPagerPageChangeListener.onPageSelected(position);
             }
         }
-
     }
 
     class TabClickListener implements View.OnClickListener {

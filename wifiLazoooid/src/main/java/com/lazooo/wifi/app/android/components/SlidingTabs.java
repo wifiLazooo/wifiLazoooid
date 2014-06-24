@@ -84,8 +84,7 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
     @Override
     public void onPageSelected(int position) {
 
-        TextView custom = WifiLazooo.getApplication().getmTitle();
-        custom.setText(tabs.get(position).name);
+        TextView custom = WifiLazooo.getApplication().getmTitle(tabs.get(position).getName(), tabs.get(position).getColor());
         mActionBar.setCustomView(custom);
     }
 
@@ -110,8 +109,6 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
 
         @Override
         public Fragment getItem(int i){
-
-            Toast.makeText(getActivity(), "getItem  "+i, Toast.LENGTH_SHORT).show();
 
             if(fragments.size() > i){
 
@@ -153,12 +150,14 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
         private String description;
         private String text;
         private Class fragment;
+        private String color;
 
-        public TabItem(String name, String description, String text, Class fragment) {
+        public TabItem(String name, String description, String text, Class fragment, String color) {
             this.name = name;
             this.description = description;
             this.text = text;
             this.fragment = fragment;
+            this.color = color;
         }
 
         public String getName() {
@@ -191,6 +190,14 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
 
         public void setFragment(Class fragment) {
             this.fragment = fragment;
+        }
+
+        public String getColor() {
+            return color;
+        }
+
+        public void setColor(String color) {
+            this.color = color;
         }
     }
 }

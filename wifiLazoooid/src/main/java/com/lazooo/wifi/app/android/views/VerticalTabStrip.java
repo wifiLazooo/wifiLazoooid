@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -112,8 +113,10 @@ public class VerticalTabStrip extends LinearLayout {
     @Override
     protected void onDraw(Canvas canvas) {
         final int height = getHeight();
+        final int width = getWidth();
         final int childCount = getChildCount();
         final int dividerHeightPx = (int) (Math.min(Math.max(0f, mDividerHeight), 1f) * height);
+        final int dividerWidthPx = (int) (Math.min(Math.max(0f, mDividerHeight), 1f) * width);
         final VerticalTabLayout.TabColorizer tabColorizer = mCustomTabColorizer != null
                 ? mCustomTabColorizer
                 : mDefaultTabColorizer;
@@ -126,6 +129,8 @@ public class VerticalTabStrip extends LinearLayout {
             View selectedTitle = getChildAt(mSelectedPosition);
             int left = selectedTitle.getLeft();
             int right = selectedTitle.getRight();
+            int top = selectedTitle.getTop();
+            int bottom = selectedTitle.getBottom();
             int color = tabColorizer.getIndicatorColor(mSelectedPosition);
 
             if (mSelectionOffset > 0f && mSelectedPosition < (getChildCount() - 1)) {
@@ -140,26 +145,32 @@ public class VerticalTabStrip extends LinearLayout {
                         (1.0f - mSelectionOffset) * left);
                 right = (int) (mSelectionOffset * nextTitle.getRight() +
                         (1.0f - mSelectionOffset) * right);
+                top = (int) (mSelectionOffset * nextTitle.getTop() +
+                        (1.0f - mSelectionOffset) * top);
+                bottom = (int) (mSelectionOffset * nextTitle.getBottom() +
+                        (1.0f - mSelectionOffset) * bottom);
             }
 
             mSelectedIndicatorPaint.setColor(color);
 
-            RectF rectF = new RectF(left, 0, right, mSelectedIndicatorThickness);
+            RectF rectF = new RectF(0, top, mSelectedIndicatorThickness, bottom);
             canvas.drawRoundRect(rectF, 0, 0, mSelectedIndicatorPaint);
         }
 
         // Thin underline along the entire bottom edge
-        RectF rectF = new RectF(0, 0, getWidth(), mBottomBorderThickness);
+        RectF rectF = new RectF(0, 0, mBottomBorderThickness, getHeight());
         canvas.drawRoundRect(rectF, 0, 0, mBottomBorderPaint);
 
         // Vertical separators between the titles
-        int separatorTop = (height - dividerHeightPx) / 2;
+        int separatorLeft = (width - dividerWidthPx)/2 ;
         for (int i = 0; i < childCount - 1; i++) {
             View child = getChildAt(i);
+            int nr = i+1;
             mDividerPaint.setColor(tabColorizer.getDividerColor(i));
+            int hereHeight = child.getHeight()*nr;
 
-            canvas.drawLine(child.getRight(), separatorTop, child.getRight(),
-                    separatorTop + dividerHeightPx, mDividerPaint);
+            canvas.drawLine(separatorLeft, hereHeight, child.getWidth()-separatorLeft,
+                    hereHeight, mDividerPaint);
         }
     }
 

@@ -43,7 +43,7 @@ public class MainActivity extends ActionBarActivity {
         SlidingTabs fragment = new SlidingTabs();
         transaction.replace(R.id.sample_content_fragment, fragment);
         transaction.commit();
-        //initializeDummy();
+        initializeDummy();
     }
 
     @Override
@@ -56,10 +56,10 @@ public class MainActivity extends ActionBarActivity {
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayShowCustomEnabled(true);
         mActionBar.setDisplayShowTitleEnabled(false);
-        mActionBar.setCustomView(WifiLazooo.getApplication().getmTitle());
-        mActionBar.setTitle("Home");
+        mActionBar.setCustomView(WifiLazooo.getApplication().getmTitle(
+                WifiLazooo.getApplication().getmMainTabs().get(0).getName(),
+                WifiLazooo.getApplication().getmMainTabs().get(0).getColor()));
         mMainPageLayout =(MainPageLayout) findViewById(R.id.sample_main_layout);
-
     }
 
     @Override

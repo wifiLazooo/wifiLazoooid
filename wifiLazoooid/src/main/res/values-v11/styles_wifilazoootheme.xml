@@ -34,6 +34,7 @@
 
     <style name="ActionBar.Solid.Wifilazoootheme" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
         <item name="background">@drawable/ab_solid_wifilazoootheme</item>
+        <item name="android:height">@dimen/actionbar_height</item>
         <item name="backgroundStacked">@drawable/ab_stacked_solid_wifilazoootheme</item>
         <item name="backgroundSplit">@drawable/ab_bottom_solid_wifilazoootheme</item>
         <item name="progressBarStyle">@style/ProgressBar.Wifilazoootheme</item>
