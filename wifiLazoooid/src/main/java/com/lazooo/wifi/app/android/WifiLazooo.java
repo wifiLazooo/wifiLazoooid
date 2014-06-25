@@ -95,6 +95,11 @@ public class WifiLazooo extends android.app.Application {
         return mFontelloTypeface;
     }
 
+    public Typeface getmMainTypeface(){
+
+        return mTitleTypeface;
+    }
+
     public List<SlidingTabs.TabItem> getmMainTabs(){
         return mMainTabs;
     }

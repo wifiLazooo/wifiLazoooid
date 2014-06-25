@@ -11,15 +11,12 @@
     <TextView
         android:id="@+id/icon_text"
         android:layout_width="42dp"
-        android:textColor="@color/brown_background"
+        android:textColor="@color/wred"
         android:textSize="28sp"
         android:layout_height="42dp"
         android:gravity="center"
         android:paddingLeft="6dp"
-        android:paddingRight="6dp"
-        android:background="@drawable/rounded_background"
-        android:paddingBottom="2dp"
-        android:paddingTop="2dp"/>
+        android:paddingRight="4dp"/>
 
     <TextView
         android:id="@+id/text"
@@ -35,7 +32,7 @@
     <View
         android:background="@drawable/home_list_divider"
         android:layout_width="wrap_content"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:layout_below="@id/text"/>
 
 </RelativeLayout>

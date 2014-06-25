@@ -49,6 +49,7 @@ public class CustomAdapter extends ArrayAdapter<HomeSearchItem> {
         HomeSearchItem c = getItem(position);
         if( c != null){
             homeSearchItemHolder.getIconText().setTypeface(WifiLazooo.getApplication().getmFontelloTypeface());
+            homeSearchItemHolder.getText().setTypeface(WifiLazooo.getApplication().getmMainTypeface());
             homeSearchItemHolder.getText().setText(c.getText());
             homeSearchItemHolder.getIconText().setText(c.getIconText());
         }
