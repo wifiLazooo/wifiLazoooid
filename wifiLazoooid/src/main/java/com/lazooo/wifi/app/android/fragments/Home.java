@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.lazooo.wifi.app.android.R;
 import com.lazooo.wifi.app.android.WifiLazooo;
 import com.lazooo.wifi.app.android.components.CustomAdapter;
-import com.lazooo.wifi.app.android.components.HomeSearchItem;
 
 /**
  * @author giok57
@@ -26,6 +25,8 @@ import com.lazooo.wifi.app.android.components.HomeSearchItem;
  * Time: 10:19
  */
 public class Home extends Fragment {
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,8 +45,8 @@ public class Home extends Fragment {
                 R.layout.fragment_home, container, false);
         Bundle args = getArguments();
         ListView listView = (ListView) rootView.findViewById(R.id.home_search_list);
-        View headerView =  ((LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.home_header, null, false);
-        View footerView =  ((LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.home_footer, null, false);
+        View headerView =  ((LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.home_search_header, null, false);
+        View footerView =  ((LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.home_search_footer, null, false);
         HomeSearchItem[] items = { new HomeSearchItem("Around you", "N"), new HomeSearchItem("Search", "S"), new HomeSearchItem("Open map", "V"), new HomeSearchItem("Explore Perugia", ">")};
         listView.setAdapter(new CustomAdapter(getActivity(), R.layout.home_search_item, items));
         listView.addHeaderView(headerView, null, false);
@@ -56,4 +57,32 @@ public class Home extends Fragment {
         footerTitle.setTypeface(WifiLazooo.getApplication().getmMainTypeface());
         return rootView;
     }
+
+    public static class HomeSearchItem {
+
+        private String text;
+        private String iconText;
+
+        public HomeSearchItem(String text, String iconText) {
+            this.text = text;
+            this.iconText = iconText;
+        }
+
+        public String getText() {
+            return text;
+        }
+
+        public void setText(String text) {
+            this.text = text;
+        }
+
+        public String getIconText() {
+            return iconText;
+        }
+
+        public void setIconText(String iconText) {
+            this.iconText = iconText;
+        }
+    }
+
 }

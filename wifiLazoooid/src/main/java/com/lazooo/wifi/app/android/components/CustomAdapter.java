@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.lazooo.wifi.app.android.R;
 import com.lazooo.wifi.app.android.WifiLazooo;
+import com.lazooo.wifi.app.android.fragments.Home;
 
 /**
  * @author giok57
@@ -21,10 +22,10 @@ import com.lazooo.wifi.app.android.WifiLazooo;
  * Date: 13/06/14
  * Time: 14:59
  */
-public class CustomAdapter extends ArrayAdapter<HomeSearchItem> {
+public class CustomAdapter extends ArrayAdapter<Home.HomeSearchItem> {
 
     public CustomAdapter(Context context, int textViewResourceId,
-                         HomeSearchItem [] objects) {
+                         Home.HomeSearchItem[] objects) {
         super(context, textViewResourceId, objects);
 
     }
@@ -46,8 +47,9 @@ public class CustomAdapter extends ArrayAdapter<HomeSearchItem> {
 
             homeSearchItemHolder = (HomeSearchItemHolder) convertView.getTag();
         }
-        HomeSearchItem c = getItem(position);
+        Home.HomeSearchItem c = getItem(position);
         if( c != null){
+
             homeSearchItemHolder.getIconText().setTypeface(WifiLazooo.getApplication().getmFontelloTypeface());
             homeSearchItemHolder.getText().setTypeface(WifiLazooo.getApplication().getmMainTypeface());
             homeSearchItemHolder.getText().setText(c.getText());
