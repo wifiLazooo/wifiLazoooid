@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ScrollView
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
@@ -7,38 +8,44 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/actionbar_height"
+        android:paddingLeft="@dimen/actionbar_height"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/home_search"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:padding="8dp"
-            android:background="@drawable/home_search_form"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/home_search_title_icon"
-                android:text="3"
-                android:textSize="22sp"
-                android:textColor="#d8d8d8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/home_search_title"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
-                android:textColor="#888"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingRight="8dp"
+                android:paddingLeft="42dp"
+                android:textColor="#999"
                 android:textSize="20sp"
-                android:text="Search wifiLazooo"/>
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="Search wifiLazooo"
+                android:background="@drawable/home_search_form" />
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/home_search_title_icon"
+                android:text="S"
+                android:layout_marginTop="5dp"
+                android:padding="12dp"
+                android:textSize="26sp"
+                android:textColor="#999"
+                android:layout_alignLeft="@id/home_search_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/home_quick_connect"
@@ -54,27 +61,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="QUICK CONNECT"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/home_tips"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/home_tips_title"
-                android:padding="10dp"
-                android:textSize="17sp"
-                android:textColor="@color/brown_bar"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="LIVE TIPS"/>
-
-            <FrameLayout android:id="@+id/fragment_header_to_replace"
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/home_tips_height"/>
 
         </LinearLayout>
 
@@ -115,6 +101,27 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/home_tips"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/home_tips_title"
+                android:padding="10dp"
+                android:textSize="17sp"
+                android:textColor="@color/brown_bar"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="LIVE TIPS"/>
+
+            <FrameLayout android:id="@+id/fragment_header_to_replace"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/home_tips_height"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -125,20 +132,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="2dp"/>
 
-            <LinearLayout
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:layout_height="20dp" />
 
-                <TextView
-                    android:layout_marginTop="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="wifiLazooo 2014 ©"/>
-
-
-            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>

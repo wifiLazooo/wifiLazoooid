@@ -11,6 +11,8 @@ buildscript {
 
 allprojects {
     repositories {
+        //for pager indicator aar
+        maven { url "http://dl.bintray.com/populov/maven" }
         mavenCentral()
     }
 }

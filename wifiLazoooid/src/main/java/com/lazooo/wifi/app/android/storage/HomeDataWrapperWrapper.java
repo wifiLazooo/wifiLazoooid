@@ -2,6 +2,8 @@ package com.lazooo.wifi.app.android.storage;/**
  * Lazooo copyright 2012
  */
 
+import com.lazooo.wifi.app.android.components.CustomAdapter;
+
 /**
  * @author giok57
  * @email gioelemeoni@gmail.com
@@ -12,7 +14,7 @@ package com.lazooo.wifi.app.android.storage;/**
  */
 public class HomeDataWrapperWrapper extends DataWrapper {
 
-    public HomeDataWrapperWrapper(){
-        super();
+    public HomeDataWrapperWrapper(CustomAdapter adapter){
+        super(adapter);
     }
 }

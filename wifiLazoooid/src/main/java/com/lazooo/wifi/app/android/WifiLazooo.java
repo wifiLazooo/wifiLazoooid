@@ -3,7 +3,6 @@ package com.lazooo.wifi.app.android;/**
  */
 
 import android.graphics.Typeface;
-import android.support.v7.app.ActionBar;
 import android.text.Html;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -31,8 +30,9 @@ public class WifiLazooo extends android.app.Application {
 
     private static WifiLazooo application = null;
     private SlidingTabs mMainTab;
-    private Typeface mTitleTypeface;
-    private Typeface mFontelloTypeface;
+    private Typeface typefaceBariol;
+    private Typeface typefaceFontello;
+    private Typeface typefaceBariolThin;
 
 
     private static final List<SlidingTabs.TabItem> mMainTabs = new LinkedList<SlidingTabs.TabItem>();
@@ -58,8 +58,9 @@ public class WifiLazooo extends android.app.Application {
         mMainTab = new SlidingTabs();
         mMainTab.setTabs(mMainTabs);
         WifiLazooo.application = this;
-        mTitleTypeface = Typeface.createFromAsset(getAssets(), "fonts/Bariol_Bold.otf");
-        mFontelloTypeface = Typeface.createFromAsset(getAssets(), "fonts/fontello.ttf");
+        typefaceBariol = Typeface.createFromAsset(getAssets(), "fonts/Bariol_Bold.otf");
+        typefaceFontello = Typeface.createFromAsset(getAssets(), "fonts/fontello.ttf");
+        typefaceBariolThin = Typeface.createFromAsset(getAssets(), "fonts/Bariol_Regular.otf");
 
     }
 
@@ -76,7 +77,7 @@ public class WifiLazooo extends android.app.Application {
         mTitle.setText(Html.fromHtml(htmlText));
 
         //mTitle.setText(text);
-        mTitle.setTypeface(mTitleTypeface);
+        mTitle.setTypeface(typefaceBariol);
         return mTitle;
     }
 
@@ -90,14 +91,19 @@ public class WifiLazooo extends android.app.Application {
         return application;
     }
 
-    public Typeface getmFontelloTypeface(){
+    public Typeface getTypefaceFontello(){
 
-        return mFontelloTypeface;
+        return typefaceFontello;
     }
 
-    public Typeface getmMainTypeface(){
+    public Typeface getTypefaceBAriol(){
 
-        return mTitleTypeface;
+        return typefaceBariol;
+    }
+
+    public Typeface getTypefaceBariolThin(){
+
+        return typefaceBariolThin;
     }
 
     public List<SlidingTabs.TabItem> getmMainTabs(){

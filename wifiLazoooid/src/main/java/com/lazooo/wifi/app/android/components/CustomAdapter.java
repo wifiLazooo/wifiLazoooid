@@ -3,7 +3,6 @@ package com.lazooo.wifi.app.android.components;/**
  */
 
 import android.content.Context;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,9 +37,9 @@ public class CustomAdapter extends ArrayAdapter<Home.HomeSearchItem> {
 
             LayoutInflater inflater = (LayoutInflater) getContext()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.home_search_item, parent, false);
-            TextView text = (TextView)convertView.findViewById(R.id.text);
-            TextView iconText = (TextView)convertView.findViewById(R.id.icon_text);
+            convertView = inflater.inflate(R.layout.fragment_home, parent, false);
+            TextView text = (TextView)convertView.findViewById(R.id.home);
+            TextView iconText = (TextView)convertView.findViewById(R.id.home_quick_connect_title);
             homeSearchItemHolder = new HomeSearchItemHolder(text, iconText);
             convertView.setTag(homeSearchItemHolder);
         }else {
@@ -50,8 +49,8 @@ public class CustomAdapter extends ArrayAdapter<Home.HomeSearchItem> {
         Home.HomeSearchItem c = getItem(position);
         if( c != null){
 
-            homeSearchItemHolder.getIconText().setTypeface(WifiLazooo.getApplication().getmFontelloTypeface());
-            homeSearchItemHolder.getText().setTypeface(WifiLazooo.getApplication().getmMainTypeface());
+            homeSearchItemHolder.getIconText().setTypeface(WifiLazooo.getApplication().getTypefaceFontello());
+            homeSearchItemHolder.getText().setTypeface(WifiLazooo.getApplication().getTypefaceBAriol());
             homeSearchItemHolder.getText().setText(c.getText());
             homeSearchItemHolder.getIconText().setText(c.getIconText());
         }

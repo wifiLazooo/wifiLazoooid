@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/indicator"
+        android:layout_alignParentBottom="@id/pager"
+        android:padding="10dip"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:background="#00FFFFFF"
+        app:radius="5dp"
+        app:fillColor="#FFF"
+        app:pageColor="#88CCCCCC"
+        app:strokeColor="#000"
+        app:strokeWidth="0dp" />
+
+    <TextView
+        android:id="@+id/left_arrow"
+        android:layout_marginTop="@dimen/home_tips_height_mid"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:text="1"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textColor="@color/brown_bar"
+        android:layout_alignLeft="@id/pager" />
+
+    <TextView
+        android:id="@+id/right_arrow"
+        android:layout_marginTop="@dimen/home_tips_height_mid"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:text="2"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textColor="@color/brown_bar"
+        android:layout_alignRight="@id/pager" />
+
+</RelativeLayout>

@@ -19,7 +19,7 @@ import com.lazooo.wifi.app.android.R;
  * Date: 14/06/14
  * Time: 12:44
  */
-public class Trend extends Fragment {
+public class Trend extends Fragment implements UpdatableFragment {
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -30,5 +30,10 @@ public class Trend extends Fragment {
                 R.layout.fragment_trend, container, false);
 
         return rootView;
+    }
+
+    @Override
+    public void update() {
+
     }
 }

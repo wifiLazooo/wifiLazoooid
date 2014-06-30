@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.lazooo.wifi.app.android.R;
 import com.lazooo.wifi.app.android.WifiLazooo;
+import com.lazooo.wifi.app.android.animations.DepthPagerTransformer;
+import com.lazooo.wifi.app.android.fragments.UpdatableFragment;
 import com.lazooo.wifi.app.android.views.HorizontalTabLayout;
 import com.lazooo.wifi.app.android.views.TabLayout;
 
@@ -48,8 +50,6 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         tabs = WifiLazooo.getApplication().getmMainTab().tabs;
-
-
     }
 
     @Override
@@ -57,14 +57,18 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
                              Bundle savedInstanceState) {
         mActionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
         return inflater.inflate(R.layout.fragment_main_tabs, container, false);
-
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
+        Toast.makeText(getActivity(),"onCreated", Toast.LENGTH_SHORT).show();
+
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
-        mViewPager.setAdapter(new SamplePagerAdapter(getFragmentManager()));
+        //mViewPager.setPageTransformer(true, new DepthPagerTransformer());
+        SamplePagerAdapter samplePagerAdapter = new SamplePagerAdapter(getFragmentManager());
+        samplePagerAdapter.notifyDataSetChanged();
+        mViewPager.setAdapter(samplePagerAdapter);
         mHorizontalTabLayout = (TabLayout) view.findViewById(R.id.sliding_tabs);
         mHorizontalTabLayout.addView();
         mHorizontalTabLayout.setViewPager(mViewPager);
@@ -73,7 +77,6 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
         mActionBar.setTitle(tabs.get(0).name);
         mViewPager.setCurrentItem(0);
         // END_INCLUDE (setup_slidingtablayout)
-
     }
 
     @Override
@@ -128,6 +131,11 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
             return fragment;
         }
 
+
+        public int getItemPosition(Object object) {
+            ((UpdatableFragment) object).update();
+            return super.getItemPosition(object);
+        }
 
         @Override
         public int getCount() {

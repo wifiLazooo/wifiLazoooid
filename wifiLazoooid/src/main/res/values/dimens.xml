@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="actionbar_height">48dp</dimen>
+    <dimen name="home_tips_height">200dp</dimen>
+    <dimen name="home_tips_height_mid">80dp</dimen>
+    <dimen name="list_item_icon_dim">28sp</dimen>
+    <dimen name="list_item_text_dim">18sp</dimen>
+
 
 </resources>

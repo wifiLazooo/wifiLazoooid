@@ -19,7 +19,7 @@ import com.lazooo.wifi.app.android.R;
  * Date: 14/06/14
  * Time: 12:44
  */
-public class Info extends Fragment {
+public class Info extends Fragment implements UpdatableFragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -31,5 +31,10 @@ public class Info extends Fragment {
                 R.layout.fragment_info, container, false);
 
         return rootView;
+    }
+
+    @Override
+    public void update() {
+
     }
 }

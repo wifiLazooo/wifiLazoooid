@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:clickable="true"
+    android:id="@+id/search_item"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:paddingTop="6dp"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp" >
+    android:paddingRight="16dp">
 
 
     <TextView
         android:id="@+id/icon_text"
         android:layout_width="42dp"
         android:textColor="@color/wred"
-        android:textSize="28sp"
+        android:textSize="@dimen/list_item_icon_dim"
         android:layout_height="42dp"
         android:gravity="center"
         android:paddingLeft="6dp"
@@ -24,12 +25,13 @@
         android:layout_height="wrap_content"
         android:textColor="#555"
         android:layout_toRightOf="@id/icon_text"
-        android:textSize="18sp"
+        android:textSize="@dimen/list_item_text_dim"
         android:paddingLeft="8dp"
-        android:paddingBottom="16dp"
+        android:paddingBottom="12dp"
         android:paddingTop="8dp"/>
 
     <View
+        android:id="@+id/divider"
         android:background="@drawable/home_list_divider"
         android:layout_width="wrap_content"
         android:layout_height="1dp"
