@@ -28,23 +28,23 @@
     <TextView
         android:id="@+id/left_arrow"
         android:layout_marginTop="@dimen/home_tips_height_mid"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
         android:text="1"
         android:gravity="center"
-        android:textSize="24sp"
-        android:textColor="@color/brown_bar"
+        android:textSize="20sp"
+        android:textColor="@color/wred"
         android:layout_alignLeft="@id/pager" />
 
     <TextView
         android:id="@+id/right_arrow"
         android:layout_marginTop="@dimen/home_tips_height_mid"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
         android:text="2"
         android:gravity="center"
-        android:textSize="24sp"
-        android:textColor="@color/brown_bar"
+        android:textSize="20sp"
+        android:textColor="@color/wred"
         android:layout_alignRight="@id/pager" />
 
 </RelativeLayout>

@@ -27,4 +27,6 @@ dependencies {
     compile 'com.android.support:support-v4:19.1.0'
     compile 'com.koushikdutta.ion:ion:1.2.4'
     compile 'com.viewpagerindicator:library:2.4.1@aar'
+    compile 'com.github.chrisbanes.actionbarpulltorefresh:extra-abc:+'
+    compile 'com.github.castorflex.smoothprogressbar:library:0.5.1'
 }

@@ -17,10 +17,15 @@ import android.widget.Toast;
 import com.lazooo.wifi.app.android.R;
 import com.lazooo.wifi.app.android.WifiLazooo;
 import com.lazooo.wifi.app.android.components.HeaderSlider;
+import com.lazooo.wifi.app.android.components.SlidingTabs;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import uk.co.senab.actionbarpulltorefresh.extras.actionbarcompat.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 /**
  * @author giok57
@@ -30,13 +35,15 @@ import java.util.List;
  * Date: 13/06/14
  * Time: 10:19
  */
-public class Home extends Fragment implements UpdatableFragment {
+public class Home extends TabFragment {
     private static List<HomeSearchItem> quickConnectItems = new LinkedList<HomeSearchItem>();
+    private PullToRefreshLayout mPullToRefreshLayout;
+
     static {
-        quickConnectItems.add(new HomeSearchItem("Around you", "N"));
-        quickConnectItems.add(new HomeSearchItem("Explore the city", ">"));
-        quickConnectItems.add(new HomeSearchItem("Popular hotSpots", "G"));
-        quickConnectItems.add(new HomeSearchItem("Open map", "V"));
+        quickConnectItems.add(new HomeSearchItem("Around you", "N", "AY"));
+        quickConnectItems.add(new HomeSearchItem("Explore the city", ">", "ETC"));
+        quickConnectItems.add(new HomeSearchItem("Popular hotSpots", "G", "PH"));
+        quickConnectItems.add(new HomeSearchItem("Open map", "V", "OM"));
     }
 
     @Override
@@ -57,6 +64,22 @@ public class Home extends Fragment implements UpdatableFragment {
         // prshow();
         View rootView = inflater.inflate(
                 R.layout.fragment_home, container, false);
+        // Now find the PullToRefreshLayout to setup
+        mPullToRefreshLayout = (PullToRefreshLayout) rootView.findViewById(R.id.ptr_layout);
+
+        // Now setup the PullToRefreshLayout
+        ActionBarPullToRefresh.from(getActivity())
+                // Mark All Children as pullable
+                .allChildrenArePullable()
+                        // Set a OnRefreshListener
+                .listener(new OnRefreshListener() {
+                    @Override
+                    public void onRefreshStarted(View view) {
+
+                    }
+                })
+                        // Finally commit the setup to our PullToRefreshLayout
+                .setup(mPullToRefreshLayout);
         Bundle args = getArguments();
         onCreateQuickConnectMenu(rootView);
         onCreateTipsMenu(rootView);
@@ -90,6 +113,12 @@ public class Home extends Fragment implements UpdatableFragment {
             itemText.setTypeface(WifiLazooo.getApplication().getTypefaceBAriol());
             itemText.setText(hsi.getText());
             itemIcon.setText(hsi.getIconText());
+            if(hsi.getSlug().equals("OM")){
+
+                TextView itemIconRight = (TextView)item.findViewById(R.id.icon_text_right);
+                itemIconRight.setVisibility(View.VISIBLE);
+                itemIconRight.setTypeface(WifiLazooo.getApplication().getTypefaceFontello());
+            }
             if(iter.hasNext() == false){
 
                 item.findViewById(R.id.divider).setVisibility(View.INVISIBLE);
@@ -130,7 +159,7 @@ public class Home extends Fragment implements UpdatableFragment {
 
         view.getBackground().setAlpha(128);
         // Create new fragment and transaction
-        Fragment newFragment = new Info();
+        Search newFragment = new Search();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
         // Replace whatever is in the fragment_container view with this fragment,
@@ -140,6 +169,8 @@ public class Home extends Fragment implements UpdatableFragment {
 
         // Commit the transaction
         transaction.commit();
+        getPagerAdapter().notifyDataSetChanged();
+
     }
 
     public void onCreateActivitiesMenu(View rootView) {
@@ -149,23 +180,28 @@ public class Home extends Fragment implements UpdatableFragment {
         title.setTypeface(WifiLazooo.getApplication().getTypefaceBAriol());
     }
 
-    @Override
-    public void update() {
-
-    }
-
     public static class HomeSearchItem {
 
+        private String slug;
         private String text;
         private String iconText;
 
-        public HomeSearchItem(String text, String iconText) {
+        public HomeSearchItem(String text, String iconText, String slug) {
             this.text = text;
+            this.slug = slug;
             this.iconText = iconText;
         }
 
         public String getText() {
             return text;
+        }
+
+        public String getSlug() {
+            return slug;
+        }
+
+        public void setSlug(String slug) {
+            this.slug = slug;
         }
 
         public void setText(String text) {

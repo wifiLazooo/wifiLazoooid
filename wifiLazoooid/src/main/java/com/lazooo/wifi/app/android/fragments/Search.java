@@ -1,26 +1,29 @@
-package com.lazooo.wifi.app.android.fragments;
-/**
+package com.lazooo.wifi.app.android.fragments;/**
  * Lazooo copyright 2012
-*/
+ */
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.lazooo.wifi.app.android.R;
-import com.lazooo.wifi.app.android.components.SlidingTabs;
 
 /**
  * @author giok57
  * @email gioelemeoni@gmail.com
  * @modifiedBy giok57
  * <p/>
- * Date: 14/06/14
- * Time: 12:44
+ * Date: 30/06/14
+ * Time: 18:02
  */
-public class User extends TabFragment{
+public class Search extends Fragment {
+
+    private ActionBar mActionBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -28,9 +31,10 @@ public class User extends TabFragment{
 
         // The last two arguments ensure LayoutParams are inflated
         // properly.
+        mActionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+        mActionBar.setCustomView(new EditText(getActivity()));
         View rootView = inflater.inflate(
-                R.layout.fragment_user, container, false);
-
+                R.layout.fragment_info, container, false);
         return rootView;
     }
 }

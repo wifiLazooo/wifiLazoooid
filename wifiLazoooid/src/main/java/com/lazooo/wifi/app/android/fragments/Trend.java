@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.lazooo.wifi.app.android.R;
+import com.lazooo.wifi.app.android.components.SlidingTabs;
 
 /**
  * @author giok57
@@ -19,7 +20,7 @@ import com.lazooo.wifi.app.android.R;
  * Date: 14/06/14
  * Time: 12:44
  */
-public class Trend extends Fragment implements UpdatableFragment {
+public class Trend extends TabFragment {
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -30,10 +31,5 @@ public class Trend extends Fragment implements UpdatableFragment {
                 R.layout.fragment_trend, container, false);
 
         return rootView;
-    }
-
-    @Override
-    public void update() {
-
     }
 }

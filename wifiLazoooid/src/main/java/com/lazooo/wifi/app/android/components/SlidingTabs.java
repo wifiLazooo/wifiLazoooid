@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.lazooo.wifi.app.android.R;
 import com.lazooo.wifi.app.android.WifiLazooo;
 import com.lazooo.wifi.app.android.animations.DepthPagerTransformer;
-import com.lazooo.wifi.app.android.fragments.UpdatableFragment;
+import com.lazooo.wifi.app.android.fragments.TabFragment;
 import com.lazooo.wifi.app.android.views.HorizontalTabLayout;
 import com.lazooo.wifi.app.android.views.TabLayout;
 
@@ -42,6 +42,7 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
     private TabLayout mHorizontalTabLayout;
 
     private ViewPager mViewPager;
+    private SamplePagerAdapter mSamplePagerAdapter;
 
     private ActionBar mActionBar;
 
@@ -56,6 +57,7 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mActionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+        onPageSelected(0);
         return inflater.inflate(R.layout.fragment_main_tabs, container, false);
     }
 
@@ -66,9 +68,9 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
 
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
         //mViewPager.setPageTransformer(true, new DepthPagerTransformer());
-        SamplePagerAdapter samplePagerAdapter = new SamplePagerAdapter(getFragmentManager());
-        samplePagerAdapter.notifyDataSetChanged();
-        mViewPager.setAdapter(samplePagerAdapter);
+        mSamplePagerAdapter = new SamplePagerAdapter(getFragmentManager());
+        mSamplePagerAdapter.notifyDataSetChanged();
+        mViewPager.setAdapter(mSamplePagerAdapter);
         mHorizontalTabLayout = (TabLayout) view.findViewById(R.id.sliding_tabs);
         mHorizontalTabLayout.addView();
         mHorizontalTabLayout.setViewPager(mViewPager);
@@ -103,6 +105,7 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
 
 
     public class SamplePagerAdapter extends FragmentStatePagerAdapter {
+
         List<Fragment> fragments;
         public SamplePagerAdapter(FragmentManager fm) {
             super(fm);
@@ -117,13 +120,14 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
 
                 return fragments.get(i);
             }
-            Fragment fragment = null;
+            TabFragment fragment = null;
             try {
 
-                fragment = (Fragment)tabs.get(i).getFragment().newInstance();
+                fragment = (TabFragment)tabs.get(i).getFragment().newInstance();
                 Bundle args = new Bundle();
                 args.putInt("object", i + 1);
                 fragment.setArguments(args);
+                fragment.setPagerAdapter(this);
                 fragments.set(i, fragment);
             }catch (Exception e){
 
@@ -131,10 +135,14 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
             return fragment;
         }
 
+        public void refreshPages(){
 
+            this.notifyDataSetChanged();
+        }
+
+        @Override
         public int getItemPosition(Object object) {
-            ((UpdatableFragment) object).update();
-            return super.getItemPosition(object);
+            return POSITION_NONE;
         }
 
         @Override
