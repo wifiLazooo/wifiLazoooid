@@ -22,11 +22,10 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:gravity="center"
-        android:background="@drawable/rounded_background"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="15dp"
-        android:layout_marginRight="15dp"
-        android:text="B" />
+        android:background="@drawable/floating_button"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp" />
 
 </RelativeLayout>

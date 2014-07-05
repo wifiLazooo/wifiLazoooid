@@ -73,7 +73,7 @@ public class WifiLazooo extends android.app.Application {
                 LinearLayout.LayoutParams.MATCH_PARENT));
         mTitle.setGravity(Gravity.CENTER_VERTICAL);
         mTitle.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 28);
-        String htmlText = "</font><font color=#FCF3E1>" + text + "</font><font color=" + color + ">.</font>";
+        String htmlText = "</font><font color=#FCF3E1>" + text + "</font><font color=" + color + "></font>";
         mTitle.setText(Html.fromHtml(htmlText));
 
         //mTitle.setText(text);

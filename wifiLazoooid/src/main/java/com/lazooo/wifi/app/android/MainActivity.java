@@ -45,8 +45,8 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_articles);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        SlidingTabs fragment = new SlidingTabs();
-        transaction.replace(R.id.sample_content_fragment, fragment);
+        SlidingTabs slidingTabs = new SlidingTabs();
+        transaction.replace(R.id.sample_content_fragment, slidingTabs);
         transaction.commit();
         initializeDummy();
     }
