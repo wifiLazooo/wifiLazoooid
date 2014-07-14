@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.text.Html;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import com.lazooo.wifi.app.android.fragments.Home;
 import com.lazooo.wifi.app.android.fragments.Info;
 import com.lazooo.wifi.app.android.fragments.Trend;
 import com.lazooo.wifi.app.android.fragments.User;
+import com.lazooo.wifi.app.android.views.FloatingButton;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -29,10 +31,11 @@ import java.util.List;
 public class WifiLazooo extends android.app.Application {
 
     private static WifiLazooo application = null;
-    private SlidingTabs mMainTab;
     private Typeface typefaceBariol;
     private Typeface typefaceFontello;
     private Typeface typefaceBariolThin;
+    private SlidingTabs slidingTabs;
+    private FloatingButton floatingButton;
 
 
     private static final List<SlidingTabs.TabItem> mMainTabs = new LinkedList<SlidingTabs.TabItem>();
@@ -55,8 +58,6 @@ public class WifiLazooo extends android.app.Application {
     public void onCreate() {
 
         super.onCreate();
-        mMainTab = new SlidingTabs();
-        mMainTab.setTabs(mMainTabs);
         WifiLazooo.application = this;
         typefaceBariol = Typeface.createFromAsset(getAssets(), "fonts/Bariol_Bold.otf");
         typefaceFontello = Typeface.createFromAsset(getAssets(), "fonts/fontello.ttf");
@@ -64,28 +65,26 @@ public class WifiLazooo extends android.app.Application {
 
     }
 
-
-    public TextView getmTitle(String text, String color){
-
-        TextView mTitle = new TextView(this);
-        //mTitle.setTextColor(getResources().getColor(R.color.brown_background));
-        mTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT));
-        mTitle.setGravity(Gravity.CENTER_VERTICAL);
-        mTitle.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 28);
-        String htmlText = "</font><font color=#FCF3E1>" + text + "</font><font color=" + color + "></font>";
-        mTitle.setText(Html.fromHtml(htmlText));
-
-        //mTitle.setText(text);
-        mTitle.setTypeface(typefaceBariol);
-        return mTitle;
+    public SlidingTabs getSlidingTabs() {
+        return slidingTabs;
     }
 
-    public SlidingTabs getmMainTab() {
-
-        return mMainTab;
+    public FloatingButton getFloatingButton() {
+        return floatingButton;
     }
 
+    public void setFloatingButton(FloatingButton floatingButton) {
+        this.floatingButton = floatingButton;
+    }
+
+    public void setSlidingTabs(SlidingTabs slidingTabs) {
+        this.slidingTabs = slidingTabs;
+    }
+
+    public  List<SlidingTabs.TabItem> getMainTabs(){
+
+        return mMainTabs;
+    }
     public static WifiLazooo getApplication(){
 
         return application;
@@ -109,6 +108,23 @@ public class WifiLazooo extends android.app.Application {
     public List<SlidingTabs.TabItem> getmMainTabs(){
         return mMainTabs;
     }
+
+    public View getmTitle(String text, String color){
+
+        TextView mTitle = new TextView(this);
+        //mTitle.setTextColor(getResources().getColor(R.color.brown_background));
+        mTitle.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT));
+        mTitle.setGravity(Gravity.CENTER_VERTICAL);
+        mTitle.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 28);
+        String htmlText = "</font><font color=#FCF3E1>" + text + "</font><font color=" + color + "></font>";
+        mTitle.setText(Html.fromHtml(htmlText));
+
+        //mTitle.setText(text);
+        mTitle.setTypeface(typefaceBariol);
+        return mTitle;
+    }
+
 }
 
 

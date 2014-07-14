@@ -3,20 +3,22 @@ package com.lazooo.wifi.app.android.views;/**
  */
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Point;
+import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
+import android.view.ViewTreeObserver;
+import android.view.animation.AnimationSet;
+import android.view.animation.OvershootInterpolator;
+import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lazooo.wifi.app.android.R;
+import com.lazooo.wifi.app.android.WifiLazooo;
 
 /**
  * @author giok57
@@ -26,9 +28,11 @@ import com.lazooo.wifi.app.android.R;
  * Date: 01/07/14
  * Time: 21:24
  */
-public class FloatingButton extends Button implements View.OnTouchListener, View.OnClickListener{
+public class FloatingButton extends RelativeLayout implements View.OnTouchListener, View.OnClickListener{
 
-    static final int MARGIN = 15;
+    static final String WIFI_ICON = ";";
+    static final int MARGIN = 10;
+    static final float MOVE_SCALE_FACTOR = 3;
 
     int windowwidth;
     int windowheight;
@@ -36,11 +40,23 @@ public class FloatingButton extends Button implements View.OnTouchListener, View
     private int lazy_y;
     private int current_x;
     private int current_y;
+    int currentWidth;
+    int currentHeight;
     private int hide_x;
     private int hide_y;
-    private boolean measured;
+    private int mMargin;
+    private boolean _measured;
+    private boolean _translated;
+    private boolean _moving;
+    private boolean _pulling;
+    private TextView internalView;
+    private float _rotation_degrees;
+
+    private String currentIcon;
     private boolean is_hide;
     private boolean is_tracking;
+    private boolean is_start_tracking;
+    private boolean is_stop_tracking;
 
     private DummyTouchListener dummyTouchListener;
 
@@ -60,37 +76,60 @@ public class FloatingButton extends Button implements View.OnTouchListener, View
 
     public FloatingButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        measured = false;
+        _measured = false;
         is_hide = true;
         is_tracking = false;
+        is_start_tracking =false;
+        is_stop_tracking = false;
+        _translated = false;
         dummyTouchListener = new DummyTouchListener();
+        mMargin = (int) TypedValue
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, MARGIN, getResources().getDisplayMetrics());
         this.context = context;
         setOnTouchListener(this);
         setOnClickListener(this);
+        WifiLazooo.getApplication().setFloatingButton(this);
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-
-        int parentWidth = MeasureSpec.getSize(widthMeasureSpec);
-        int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
-        this.setMeasuredDimension(parentWidth, parentHeight);
-        RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) getLayoutParams();
-        windowwidth = parentWidth;
-        windowheight = parentHeight;
-        lazy_x = parentWidth - MARGIN;
-        lazy_y = parentHeight - MARGIN;
-    }
 
     @Override
-    protected void onVisibilityChanged (View changedView, int visibility){
-        super.onVisibilityChanged(changedView, visibility);
-        RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) getLayoutParams();
-        if (!measured){
-            //initial margin
-            measured = true;
-            hide_x = current_x = lParams.leftMargin;
-            hide_y = current_y = lParams.topMargin;
+    protected void onAttachedToWindow (){
+        //some init code
+        internalView = (TextView) findViewById(R.id.floating_button_text);
+        internalView.setTypeface(WifiLazooo.getApplication().getTypefaceFontello());
+        currentIcon = WIFI_ICON;
+        internalView.setText(currentIcon);
+        ViewTreeObserver viewTreeObserver = getViewTreeObserver();
+        if (viewTreeObserver.isAlive()) {
+            viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                if (!_measured){
+                    //initial
+                    _measured = true;
+                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }else {
+                        getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    }
+                    RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) getLayoutParams();
+                    View parent =(View) getParent();
+                    windowwidth = parent.getWidth();
+                    windowheight = parent.getHeight();
+                    currentWidth = getWidth();
+                    currentHeight = getHeight();
+                    current_x = lazy_x = windowwidth - mMargin - currentWidth;
+                    current_y = lazy_y = windowheight - mMargin - currentHeight;
+                    hide_x = windowwidth - mMargin - currentWidth;
+                    hide_y = windowheight + currentHeight;
+                    lParams.leftMargin = lazy_x;
+                    lParams.topMargin = lazy_y;
+                    lParams.bottomMargin = - 250;
+                    lParams.rightMargin = - 250;
+                    setLayoutParams(lParams);
+                }
+                }
+            });
         }
     }
 
@@ -99,7 +138,7 @@ public class FloatingButton extends Button implements View.OnTouchListener, View
         if (is_hide){
 
             is_hide = false;
-            this.translate(current_x, lazy_y, current_y, lazy_y);
+            this.translate(hide_x, lazy_y, hide_y, lazy_y);
         }
     }
 
@@ -117,9 +156,29 @@ public class FloatingButton extends Button implements View.OnTouchListener, View
         this.translate(current_x, lazy_y, current_y, lazy_y);
     }
 
-    public void trackDirection(int degrees){
+    private void startTracking(int degrees){
 
         is_tracking = true;
+    }
+
+    private void stopTracking(int degrees){
+
+        is_tracking = false;
+    }
+
+    private void tryStartTracking(){
+
+        is_start_tracking = true;
+        is_stop_tracking = false;
+        _moving = false;
+    }
+
+    private void tryStopTracking(){
+
+        is_stop_tracking = false;
+        is_start_tracking = false;
+        _moving = false;
+
     }
 
     private Point degreesToPosition(int degrees){
@@ -156,19 +215,25 @@ public class FloatingButton extends Button implements View.OnTouchListener, View
 
     private void translate(int from_x, int to_x, int from_y, int to_y) {
 
+        AnimationSet animationSet = new AnimationSet(true);
+        animationSet.setInterpolator(new OvershootInterpolator());
+        animationSet.setDuration(400);
         TranslateAnimation animation = new TranslateAnimation(0,
                 to_x - from_x, 0, to_y - from_y);
         animation.setDuration(250);
+        animationSet.addAnimation(animation);
         current_x = to_x;
         current_y = to_y;
+        _translated = true;
         this.setOnTouchListener(dummyTouchListener);
-        startAnimation(animation);
+        startAnimation(animationSet);
     }
 
     public boolean onTouch(View view, MotionEvent event) {
 
         final int X = ((int) event.getRawX());
         final int Y = ((int) event.getRawY());
+        Point p;
         RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
@@ -176,20 +241,41 @@ public class FloatingButton extends Button implements View.OnTouchListener, View
                 _yDelta = Y - lParams.topMargin;
                 current_x = lParams.leftMargin;
                 current_y = lParams.topMargin;
+                _moving = true;
                 break;
             case MotionEvent.ACTION_UP:
-                translate(X - _xDelta, current_x, Y - _yDelta, current_y);
+                if(_pulling){
+                    RotateAnimation rotateAnimation = new RotateAnimation(_rotation_degrees, 0, currentWidth/2, currentHeight/2);
+                    rotateAnimation.setDuration(200);
+                    rotateAnimation.setFillAfter(true);
+                    internalView.startAnimation(rotateAnimation);
+                    _pulling = false;
+                    _rotation_degrees = -1000;
+                }
+                if(_moving){
+                    p = processMove(X-_xDelta, Y-_yDelta);
+                    if(p != null){
+                        internalView.setText(currentIcon);
+                        translate(p.x, current_x, p.y, current_y);
+                    }
+                }
                 break;
             case MotionEvent.ACTION_POINTER_DOWN:
                 break;
             case MotionEvent.ACTION_POINTER_UP:
                 break;
             case MotionEvent.ACTION_MOVE:
-                lParams.leftMargin = X - _xDelta;
-                lParams.topMargin = Y - _yDelta;
-                lParams.rightMargin = -250;
-                lParams.bottomMargin = -250;
-                view.setLayoutParams(lParams);
+                if(_moving) {
+
+                    p = processMove(X-_xDelta, Y-_yDelta);
+                    if(p != null) {
+                        lParams.leftMargin = p.x;
+                        lParams.topMargin = p.y;
+                        lParams.bottomMargin = -250;
+                        lParams.rightMargin = -250;
+                        view.setLayoutParams(lParams);
+                    }
+                }
                 break;
         }
         return false;
@@ -197,26 +283,109 @@ public class FloatingButton extends Button implements View.OnTouchListener, View
 
     @Override
     public void onAnimationEnd(){
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) getLayoutParams();
-        layoutParams.leftMargin = current_x;
-        layoutParams.topMargin = current_y;
-        setLayoutParams(layoutParams);
-        //reset correct touch listener
-        setOnTouchListener(this);
+        if(_translated){
+
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) getLayoutParams();
+            layoutParams.leftMargin = current_x;
+            layoutParams.topMargin = current_y;
+            setLayoutParams(layoutParams);
+            setOnTouchListener(this);
+            _translated = false;
+        }
     }
 
-    private int getScaled(float difference){
+    private Point processMove(float diff_x, float diff_y){
 
-        int windowmax = windowheight < windowwidth ? windowheight-_yDelta: windowwidth-_xDelta;
-        double d;
-        double f = ((difference / windowmax) * difference) / windowmax + 1;
-        d = difference / f;
-        return d > 0? (int)d: 0;
+        int windowmin = windowheight < windowwidth ? windowheight: windowwidth;
+        float move_x = current_x - diff_x;
+        float move_y = current_y - diff_y;
+        double fx;
+        double fy;
+        fx = (MOVE_SCALE_FACTOR * Math.abs(move_x)) / windowmin + 1;
+        fy = (MOVE_SCALE_FACTOR * Math.abs(move_y)) / windowmin + 1;
+        if(fx > fy)
+            fy = fx;
+        move_y = (int) (move_y / fy);
+        move_x = (int) (move_x / fy);
+        int x = windowwidth-currentWidth;
+        if(current_x-move_x < x)
+            x =(int) (current_x-move_x);
+        int y = windowheight-currentHeight;
+        if(current_y-move_y < y)
+            y =(int) (current_y-move_y);
+
+        if(dragging(fy, x, y))
+            return null;
+
+        return new Point(x, y);
+    }
+
+    private boolean dragging(double scale, float x, float y){
+
+        boolean ret = false;
+        if(scale > 3.0){
+            setOnTouchListener(dummyTouchListener);
+            AnimationSet animationSet = new AnimationSet(true);
+            animationSet.setInterpolator(new OvershootInterpolator(3));
+            animationSet.setDuration(400);
+            _translated = true;
+            if(!is_start_tracking && !is_stop_tracking) {
+                //start tracking
+                tryStartTracking();
+
+                current_x = (windowwidth / 2)-(currentWidth/2);
+                current_y = lazy_y;
+                TranslateAnimation animation = new TranslateAnimation(0, current_x - x, 0, current_y - y);
+                animation.setDuration(250);
+                animationSet.addAnimation(animation);
+                startAnimation(animationSet);
+                internalView.setText(currentIcon);
+                ret =  false;
+
+            }else if(!is_stop_tracking){
+                //stop tracking
+                tryStopTracking();
+
+                TranslateAnimation animation = new TranslateAnimation(0,  lazy_x-x, 0,  lazy_y-y);
+                current_x = lazy_x;
+                current_y = lazy_y;
+                animation.setDuration(250);
+                animationSet.addAnimation(animation);
+                startAnimation(animationSet);
+                internalView.setText(currentIcon);
+                ret = false;
+            }
+            RotateAnimation rotateAnimation = new RotateAnimation(_rotation_degrees, 0, currentWidth/2, currentHeight/2);
+            rotateAnimation.setDuration(200);
+            rotateAnimation.setFillAfter(true);
+            internalView.startAnimation(rotateAnimation);
+            _pulling = false;
+            _rotation_degrees = -1000;
+
+        }else if(scale > 1.0 && _pulling == false) {
+
+            if(_rotation_degrees == -1000){
+                _rotation_degrees = 0;
+            }else {
+
+                _pulling = true;
+                int f = windowwidth / 2 - (current_x+currentWidth/2);
+                if(f == 0){
+                    f = 1;
+                }
+                _rotation_degrees = (float) Math.abs(Math.toDegrees(Math.atan((windowheight / 2 - current_y) / f)))-90;
+                internalView.setText("B");
+                RotateAnimation rotateAnimation = new RotateAnimation(0, _rotation_degrees, currentWidth / 2, currentHeight / 2);
+                rotateAnimation.setDuration(200);
+                rotateAnimation.setFillAfter(true);
+                internalView.startAnimation(rotateAnimation);
+            }
+        }
+        return ret;
     }
 
     @Override
     public void onClick(View view) {
-       // setBackgroundColor(getResources().getColor(R.color.wblue));
     }
 
     public static class DummyTouchListener implements OnTouchListener{

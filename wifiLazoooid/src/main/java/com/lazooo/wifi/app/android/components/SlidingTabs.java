@@ -7,22 +7,24 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.TranslateAnimation;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lazooo.wifi.app.android.R;
 import com.lazooo.wifi.app.android.WifiLazooo;
-import com.lazooo.wifi.app.android.animations.DepthPagerTransformer;
 import com.lazooo.wifi.app.android.fragments.TabFragment;
 import com.lazooo.wifi.app.android.views.HorizontalTabLayout;
 import com.lazooo.wifi.app.android.views.TabLayout;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -39,10 +41,16 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
 
     private List<SlidingTabs.TabItem> tabs;
 
-    private TabLayout mHorizontalTabLayout;
+    TabFragment[] fragments;
+    private boolean _isLoading;
 
+    private TabLayout mTabLayout;
+    private TabFragment current;
+
+    private RelativeLayout mainLayout;
     private ViewPager mViewPager;
     private SamplePagerAdapter mSamplePagerAdapter;
+    private SwipeRefreshLayout mPullToRefreshLayout;
 
     private ActionBar mActionBar;
 
@@ -50,15 +58,18 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tabs = WifiLazooo.getApplication().getmMainTab().tabs;
+        fragments = new TabFragment[4];
+        tabs = WifiLazooo.getApplication().getmMainTabs();
+        WifiLazooo.getApplication().setSlidingTabs(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mActionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
-        onPageSelected(0);
-        return inflater.inflate(R.layout.fragment_main_tabs, container, false);
+        //onPageSelected(0);
+        View rootView = inflater.inflate(R.layout.fragment_main_tabs, container, false);
+        return rootView;
     }
 
     @Override
@@ -66,20 +77,56 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
 
         Toast.makeText(getActivity(),"onCreated", Toast.LENGTH_SHORT).show();
 
+        mainLayout = (RelativeLayout) view.findViewById(R.id.main_layout);
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
         //mViewPager.setPageTransformer(true, new DepthPagerTransformer());
-        mSamplePagerAdapter = new SamplePagerAdapter(getFragmentManager());
+        mSamplePagerAdapter = new SamplePagerAdapter(getFragmentManager(), this);
         mSamplePagerAdapter.notifyDataSetChanged();
         mViewPager.setAdapter(mSamplePagerAdapter);
-        mHorizontalTabLayout = (TabLayout) view.findViewById(R.id.sliding_tabs);
-        mHorizontalTabLayout.addView();
-        mHorizontalTabLayout.setViewPager(mViewPager);
-        mHorizontalTabLayout.populateTabStrip(tabs);
-        mHorizontalTabLayout.setOnPageChangeListener(this);
+        mTabLayout = (TabLayout) view.findViewById(R.id.sliding_tabs);
+        mTabLayout.addView();
+        mTabLayout.setViewPager(mViewPager);
+        mTabLayout.populateTabStrip(tabs);
+        mTabLayout.setOnPageChangeListener(this);
         mActionBar.setTitle(tabs.get(0).name);
         mViewPager.setCurrentItem(0);
         // END_INCLUDE (setup_slidingtablayout)
     }
+
+    public void setCurrentTabFragment(TabFragment tabFragment, int position){
+
+        fragments[position] = tabFragment;
+    }
+
+    public void onStartLoading(){
+
+        if(_isLoading == false && mTabLayout instanceof HorizontalTabLayout){
+
+            final float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
+            TranslateAnimation animation = new TranslateAnimation(0,0,0,px);
+            animation.setDuration(100);
+            animation.setFillEnabled(true);
+            animation.setFillAfter(true);
+
+            mTabLayout.startAnimation(animation);
+            _isLoading = true;
+        }
+    }
+
+    public void onStopLoading(){
+
+        if(_isLoading && mTabLayout instanceof HorizontalTabLayout){
+
+            final float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
+            TranslateAnimation animation = new TranslateAnimation(0,0,px,0);
+            animation.setDuration(100);
+            animation.setFillEnabled(true);
+            animation.setFillAfter(true);
+            mTabLayout.startAnimation(animation);
+            _isLoading = false;
+        }
+    }
+
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -89,8 +136,15 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
     @Override
     public void onPageSelected(int position) {
 
-        TextView custom = WifiLazooo.getApplication().getmTitle(tabs.get(position).getName(), tabs.get(position).getColor());
+        View custom = WifiLazooo.getApplication().getmTitle(tabs.get(position).getName(), tabs.get(position).getColor());
         mActionBar.setCustomView(custom);
+        TabFragment selected = fragments[position];
+        if (current != null && current.getTabPosition() != selected.getTabPosition()){
+
+            current.onFragmentChangedFromThis();
+        }
+        selected.onFragmentSelected();
+        current = selected;
     }
 
     @Override
@@ -106,32 +160,30 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
 
     public class SamplePagerAdapter extends FragmentStatePagerAdapter {
 
-        List<Fragment> fragments;
-        public SamplePagerAdapter(FragmentManager fm) {
+        SlidingTabs slidingTabs;
+
+        public SamplePagerAdapter(FragmentManager fm, SlidingTabs slidingTabs) {
             super(fm);
-            fragments = new LinkedList<Fragment>();
+            this.slidingTabs = slidingTabs;
         }
 
 
         @Override
-        public Fragment getItem(int i){
+        public Fragment getItem(int position){
 
-            if(fragments.size() > i){
+            //call onpageselected before to fill the array of tabfragments
+            //slidingTabs.onPageSelected(position);
 
-                return fragments.get(i);
-            }
             TabFragment fragment = null;
             try {
 
-                fragment = (TabFragment)tabs.get(i).getFragment().newInstance();
-                Bundle args = new Bundle();
-                args.putInt("object", i + 1);
-                fragment.setArguments(args);
-                fragment.setPagerAdapter(this);
-                fragments.set(i, fragment);
-            }catch (Exception e){
-
+                fragment = (TabFragment)tabs.get(position).getFragment().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            Bundle args = new Bundle();
+            fragment.setArguments(args);
+            fragment.setPagerAdapter(this);
             return fragment;
         }
 

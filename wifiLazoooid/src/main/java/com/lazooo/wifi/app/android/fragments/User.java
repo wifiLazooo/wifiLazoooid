@@ -22,6 +22,11 @@ import com.lazooo.wifi.app.android.components.SlidingTabs;
  */
 public class User extends TabFragment{
 
+    public int getTabPosition(){
+
+        return 3;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

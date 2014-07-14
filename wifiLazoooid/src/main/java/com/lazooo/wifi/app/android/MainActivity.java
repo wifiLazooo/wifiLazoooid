@@ -37,7 +37,7 @@ public class MainActivity extends ActionBarActivity {
 
     private ActionBar mActionBar;
     private MainPageLayout mMainPageLayout;
-    private SlidingTabs tabs;
+    private SlidingTabs slidingTabs;
 
     /** Called when the activity is first created. */
     @Override
@@ -45,10 +45,15 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_articles);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        SlidingTabs slidingTabs = new SlidingTabs();
+        slidingTabs = new SlidingTabs();
         transaction.replace(R.id.sample_content_fragment, slidingTabs);
         transaction.commit();
         initializeDummy();
+    }
+
+    public SlidingTabs getSlidingTabs(){
+
+        return slidingTabs;
     }
 
     @Override

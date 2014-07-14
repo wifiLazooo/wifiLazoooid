@@ -6,9 +6,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,7 +41,9 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
  */
 public class Home extends TabFragment {
     private static List<HomeSearchItem> quickConnectItems = new LinkedList<HomeSearchItem>();
-    private PullToRefreshLayout mPullToRefreshLayout;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private LinearLayout mainLinearLayout;
+    private float actionBarHeight;
 
     static {
         quickConnectItems.add(new HomeSearchItem("Around you", "N", "AY"));
@@ -53,6 +59,8 @@ public class Home extends TabFragment {
         transaction.replace(R.id.fragment_header_to_replace, new HeaderSlider());
         transaction.addToBackStack(null);
         transaction.commit();
+        setLoading(false);
+        actionBarHeight = getResources().getDimension(R.dimen.actionbar_height);
         super.onCreate(savedInstanceState);
     }
 
@@ -60,32 +68,71 @@ public class Home extends TabFragment {
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        // The last two arguments ensure LayoutParams are inflated
-        // prshow();
         View rootView = inflater.inflate(
                 R.layout.fragment_home, container, false);
-        // Now find the PullToRefreshLayout to setup
-        mPullToRefreshLayout = (PullToRefreshLayout) rootView.findViewById(R.id.ptr_layout);
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.ptr_layout);
+        mainLinearLayout = (LinearLayout) rootView.findViewById(R.id.home_main_layout);
 
-        // Now setup the PullToRefreshLayout
-        ActionBarPullToRefresh.from(getActivity())
-                // Mark All Children as pullable
-                .allChildrenArePullable()
-                        // Set a OnRefreshListener
-                .listener(new OnRefreshListener() {
-                    @Override
-                    public void onRefreshStarted(View view) {
-
-                    }
-                })
-                        // Finally commit the setup to our PullToRefreshLayout
-                .setup(mPullToRefreshLayout);
+        swipeRefreshLayout.setColorScheme(R.color.brown_bar, R.color.wred, R.color.wyellow, R.color.wgreen);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                _startLoadingView();
+                _startLoading();
+            }
+        });
         Bundle args = getArguments();
         onCreateQuickConnectMenu(rootView);
         onCreateTipsMenu(rootView);
         onCreateSearchMenu(rootView);
         onCreateActivitiesMenu(rootView);
         return rootView;
+    }
+
+    private void _startLoading(){
+
+    }
+
+    private void _startLoadingView(){
+
+        setLoading(true);
+        WifiLazooo.getApplication().getSlidingTabs().onStartLoading();
+        final float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
+        mainLinearLayout.setPadding(0, (int) (actionBarHeight+px), 0, 0);
+    }
+
+    private void _stopLoadingView(){
+
+        setLoading(false);
+        WifiLazooo.getApplication().getSlidingTabs().onStopLoading();
+        final float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
+        mainLinearLayout.setPadding(0, (int) (actionBarHeight), 0, 0);
+    }
+
+    public String getTabName(){
+
+        return "Home";
+    }
+
+    public int getTabPosition(){
+
+        return 0;
+    }
+
+
+    @Override
+    public void onFragmentSelected() {
+        super.onFragmentSelected();
+        if(isLoading()){
+            _startLoadingView();
+        }else {
+            _stopLoadingView();
+        }
+    }
+
+    @Override
+    public void onFragmentChangedFromThis() {
+        super.onFragmentChangedFromThis();
     }
 
     public void onCreateQuickConnectMenu(View rootView){

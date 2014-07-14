@@ -21,6 +21,12 @@ import com.lazooo.wifi.app.android.components.SlidingTabs;
  * Time: 12:44
  */
 public class Trend extends TabFragment {
+
+    public int getTabPosition(){
+
+        return 2;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

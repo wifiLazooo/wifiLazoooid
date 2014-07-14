@@ -133,12 +133,12 @@ class HoriziontalTabStrip extends LinearLayout {
 
             mSelectedIndicatorPaint.setColor(color);
 
-            RectF rectF = new RectF(left, 0, right, mSelectedIndicatorThickness);
+            RectF rectF = new RectF(left, getBottom()-mSelectedIndicatorThickness, right, getBottom());
             canvas.drawRoundRect(rectF, 0, 0, mSelectedIndicatorPaint);
         }
 
         // Thin underline along the entire bottom edge
-        RectF rectF = new RectF(0, 0, getWidth(), mBottomBorderThickness);
+        RectF rectF = new RectF(0, getBottom()-mSelectedIndicatorThickness, getWidth(), getBottom());
         canvas.drawRoundRect(rectF, 0, 0, mBottomBorderPaint);
 
         // Vertical separators between the titles

@@ -1,51 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<uk.co.senab.actionbarpulltorefresh.extras.actionbarcompat.PullToRefreshLayout
+<android.support.v4.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ptr_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
         <LinearLayout
+            android:id="@+id/home_main_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/actionbar_height"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/home_search"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:padding="8dp"
-                android:background="@drawable/home_search_form"
-                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/home_search_title_icon"
-                    android:text="3"
-                    android:textSize="22sp"
-                    android:textColor="#d8d8d8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/search_height"
+                android:background="@color/brown_trasparent"
+                android:gravity="center_vertical">
 
-                <TextView
-                    android:id="@+id/home_search_title"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/home_search"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="8dp"
-                    android:textColor="#888"
-                    android:textSize="20sp"
-                    android:text="Search wifiLazooo"/>
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:padding="8dp"
+                    android:background="@drawable/home_search_form"
+                    android:orientation="horizontal">
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/home_search_title_icon"
+                        android:text="3"
+                        android:textSize="22sp"
+                        android:textColor="#d8d8d8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/home_search_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="8dp"
+                        android:textColor="#888"
+                        android:textSize="20sp"
+                        android:text="Search wifiLazooo"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/home_quick_connect"
@@ -150,4 +158,4 @@
 
         </LinearLayout>
     </ScrollView>
-</uk.co.senab.actionbarpulltorefresh.extras.actionbarcompat.PullToRefreshLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

@@ -16,16 +16,25 @@
         android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="@id/viewpager"/>
+        android:layout_alignParentBottom="@id/viewpager"/>
 
     <com.lazooo.wifi.app.android.views.FloatingButton
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:gravity="center"
         android:background="@drawable/floating_button"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp" />
+        android:layout_marginTop="-150dp"
+        android:layout_marginLeft="-150dp">
+        <TextView
+            android:id="@+id/floating_button_text"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="26sp"
+            android:textColor="@color/brown_background"
+            android:gravity="center"
+            />
+    </com.lazooo.wifi.app.android.views.FloatingButton>
 
 </RelativeLayout>

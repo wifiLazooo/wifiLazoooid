@@ -48,7 +48,8 @@
     </style>
 
     <style name="ActionBar.Solid.Wifilazoootheme" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
-        <item name="android:background">@drawable/ab_solid_blue</item>
+        <item name="android:background">@color/wblued</item>
+        <item name="android:logo">@drawable/logo_trans</item>
         <item name="android:height">@dimen/actionbar_height</item>
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_wifilazoootheme</item>
         <item name="android:backgroundSplit">@drawable/ab_bottom_solid_wifilazoootheme</item>

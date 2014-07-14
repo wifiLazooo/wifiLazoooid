@@ -22,6 +22,12 @@ import com.lazooo.wifi.app.android.components.SlidingTabs;
  */
 public class Info extends TabFragment{
 
+
+    public int getTabPosition(){
+
+        return 1;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
