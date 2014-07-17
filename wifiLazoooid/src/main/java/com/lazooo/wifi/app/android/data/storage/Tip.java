@@ -31,10 +31,10 @@ public class Tip extends LazoooRecord<Tip> {
 
     String tipType;
 
-    public Tip(Date now, GeoPoint currLocation, String iconBack, String iconFront,
+    public Tip(Date now, GeoPoint currLocation, String lazoooId, String iconBack, String iconFront,
                String title, String text, String actionToLauch, String tipType) {
 
-        super(now, currLocation);
+        super(now, currLocation, lazoooId);
         this.iconBack = iconBack;
         this.iconFront = iconFront;
         this.title = title;

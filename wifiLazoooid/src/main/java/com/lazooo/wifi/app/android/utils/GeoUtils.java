@@ -2,6 +2,8 @@ package com.lazooo.wifi.app.android.utils;/**
  * Lazooo copyright 2012
  */
 
+import com.google.gson.Gson;
+
 /**
  * @author giok57
  * @email gioelemeoni@gmail.com
@@ -11,6 +13,8 @@ package com.lazooo.wifi.app.android.utils;/**
  * Time: 18:28
  */
 public class GeoUtils {
+
+    private static Gson gson = new Gson();
 
     public static float distFrom(float lat1, float lng1, float lat2, float lng2) {
         double earthRadius = 6371; //kilometers
@@ -23,5 +27,15 @@ public class GeoUtils {
         float dist = (float) (earthRadius * c);
 
         return dist;
+    }
+
+    public static GeoPoint fromString(String geoString){
+
+        return gson.fromJson(geoString, GeoPoint.class);
+    }
+
+    public static String toString(GeoPoint geoPoint){
+
+        return gson.toJson(geoPoint);
     }
 }

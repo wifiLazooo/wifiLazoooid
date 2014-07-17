@@ -28,15 +28,30 @@ public class LazoooRecord<D> extends SugarRecord<D> {
 
     private Date lastUpdate;
     private String lazoooId;
-    private GeoPoint geoLastUpdate;
+    private String geoLastUpdate;
+
+    public LazoooRecord(){
+
+        super();
+    }
 
     /**
      *
      * @param now the current time when the api was called to create this instance.
      * @param currLocation the current location when the api was called to create this instance.
      */
-    public LazoooRecord(Date now, GeoPoint currLocation){
+    public LazoooRecord(Date now, GeoPoint currLocation, String lazoooId){
 
+        super();
+        this.lazoooId = lazoooId;
+        this.lastUpdate = now;
+        this.geoLastUpdate = GeoUtils.toString(currLocation);
+    }
+
+    public LazoooRecord(Date now, String currLocation, String lazoooId){
+
+        super();
+        this.lazoooId = lazoooId;
         this.lastUpdate = now;
         this.geoLastUpdate = currLocation;
     }
@@ -48,7 +63,8 @@ public class LazoooRecord<D> extends SugarRecord<D> {
 
     public long getMetersFromLastUpdate(GeoPoint currentGeoPoint){
 
-        return (long) GeoUtils.distFrom(geoLastUpdate.getLatitude(), geoLastUpdate.getLongitude(),
+        GeoPoint geoPoint = GeoUtils.fromString(geoLastUpdate);
+        return (long) GeoUtils.distFrom(geoPoint.getLatitude(), geoPoint.getLongitude(),
                 currentGeoPoint.getLatitude(), currentGeoPoint.getLongitude());
     }
 
@@ -72,7 +88,7 @@ public class LazoooRecord<D> extends SugarRecord<D> {
     public static <D extends LazoooRecord<?>> D lazoooFindById(Class<D> l, String lazoooId)
             throws StorageRuntimeException {
 
-        List<D> r = find(l, "lazoooId = ?", lazoooId);
+        List<D> r = find(l, "LAZOOO_ID = ?", lazoooId);
         if(r.isEmpty()){
 
             //TODO maybe raise an exception
@@ -98,6 +114,7 @@ public class LazoooRecord<D> extends SugarRecord<D> {
 
         LazoooRecord<D> r = lazoooFindById(getClass(), getLazoooId());
         if(r != null){
+
             delete();
         }
         save();

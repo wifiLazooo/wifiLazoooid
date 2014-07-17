@@ -29,10 +29,10 @@ public class DataWrap {
         if(needRefresh() == false){
             return;
         }
-        launchRefresh();
+        refresh();
     }
 
-    public void launchRefresh(){
+    public void refresh(){
 
 
     }

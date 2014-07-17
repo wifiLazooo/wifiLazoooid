@@ -21,6 +21,7 @@ public class Extras extends SugarRecord<Extras> {
     String currentImage;
     String currentSessionKey;
     String myUserId;
+    boolean loggedIn;
 
     public static Extras getExtras(){
 
@@ -29,5 +30,37 @@ public class Extras extends SugarRecord<Extras> {
             extras = findById(Extras.class, EXTRAS_ID);
         }
         return extras;
+    }
+
+    public String getCurrentImage() {
+        return currentImage;
+    }
+
+    public void setCurrentImage(String currentImage) {
+        this.currentImage = currentImage;
+    }
+
+    public String getCurrentSessionKey() {
+        return currentSessionKey;
+    }
+
+    public void setCurrentSessionKey(String currentSessionKey) {
+        this.currentSessionKey = currentSessionKey;
+    }
+
+    public String getMyUserId() {
+        return myUserId;
+    }
+
+    public void setMyUserId(String myUserId) {
+        this.myUserId = myUserId;
+    }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
     }
 }

@@ -4,32 +4,26 @@ package com.lazooo.wifi.app.android.fragments;/**
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.lazooo.wifi.app.android.R;
 import com.lazooo.wifi.app.android.WifiLazooo;
 import com.lazooo.wifi.app.android.components.HeaderSlider;
-import com.lazooo.wifi.app.android.components.SlidingTabs;
+import com.lazooo.wifi.app.android.data.HomeWrap;
+import com.lazooo.wifi.app.android.data.NewData;
+import com.lazooo.wifi.app.android.data.storage.Action;
+import com.lazooo.wifi.app.android.data.storage.Tip;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
-import uk.co.senab.actionbarpulltorefresh.extras.actionbarcompat.PullToRefreshLayout;
-import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
-import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 /**
  * @author giok57
@@ -44,6 +38,11 @@ public class Home extends TabFragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private LinearLayout mainLinearLayout;
     private float actionBarHeight;
+    private HomeWrap homeWrap;
+
+    private NewData.NewDataListener<List<Action>> lPublicActivity;
+    private NewData.NewDataListener<List<Tip>> lTips;
+    private NewData.NewDataListener<String> lAroundWifis;
 
     static {
         quickConnectItems.add(new HomeSearchItem("Around you", "N", "AY"));
@@ -60,7 +59,10 @@ public class Home extends TabFragment {
         transaction.addToBackStack(null);
         transaction.commit();
         setLoading(false);
+        _initListeners();
         actionBarHeight = getResources().getDimension(R.dimen.actionbar_height);
+        homeWrap = WifiLazooo.getApplication().getDataWrap(HomeWrap.class);
+        homeWrap.setHomeListeners(lPublicActivity, lTips, lAroundWifis);
         super.onCreate(savedInstanceState);
     }
 
@@ -74,11 +76,14 @@ public class Home extends TabFragment {
         mainLinearLayout = (LinearLayout) rootView.findViewById(R.id.home_main_layout);
 
         swipeRefreshLayout.setColorScheme(R.color.brown_bar, R.color.wred, R.color.wyellow, R.color.wgreen);
+        final Home home = this;
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 _startLoadingView();
                 _startLoading();
+
+                homeWrap.refresh();
             }
         });
         Bundle args = getArguments();
@@ -87,6 +92,28 @@ public class Home extends TabFragment {
         onCreateSearchMenu(rootView);
         onCreateActivitiesMenu(rootView);
         return rootView;
+    }
+
+    private void _initListeners(){
+
+        lPublicActivity = new NewData.NewDataListener<List<Action>>() {
+            @Override
+            public void onNewDataComes(List<Action> newData) {
+
+            }
+        };
+        lTips = new NewData.NewDataListener<List<Tip>>() {
+            @Override
+            public void onNewDataComes(List<Tip> newData) {
+
+            }
+        };
+        lAroundWifis = new NewData.NewDataListener<String>() {
+            @Override
+            public void onNewDataComes(String newData) {
+
+            }
+        };
     }
 
     private void _startLoading(){

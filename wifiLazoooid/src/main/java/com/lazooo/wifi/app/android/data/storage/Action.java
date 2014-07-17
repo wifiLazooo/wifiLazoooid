@@ -34,9 +34,9 @@ public class Action extends LazoooRecord<Action> {
     String richText;
     String visibility;
 
-    public Action(Date now, GeoPoint currLocation, String icon, String visibility,
+    public Action(Date now, GeoPoint currLocation, String lazoooId, String icon, String visibility,
                   String typeIcon, String actionType, String richText, String userId) {
-        super(now, currLocation);
+        super(now, currLocation, lazoooId);
         this.icon = icon;
         this.userId = userId;
         this.visibility = visibility;
