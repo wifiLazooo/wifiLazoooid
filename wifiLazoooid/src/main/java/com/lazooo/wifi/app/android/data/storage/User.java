@@ -21,6 +21,7 @@ public class User extends LazoooRecord<User> {
     public User(){
 
     }
+
     /**
      * @param now          the current time when the api was called to create this instance.
      * @param currLocation the current location when the api was called to create this instance.

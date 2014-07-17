@@ -58,7 +58,7 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fragments = new TabFragment[4];
+        fragments = new TabFragment[WifiLazooo.getApplication().getmMainTabs().size()];
         tabs = WifiLazooo.getApplication().getmMainTabs();
         WifiLazooo.getApplication().setSlidingTabs(this);
     }
@@ -199,7 +199,7 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
 
         @Override
         public int getCount() {
-            return 4;
+            return WifiLazooo.getApplication().getMainTabs().size();
         }
 
         @Override

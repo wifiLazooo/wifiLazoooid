@@ -54,7 +54,7 @@ public class WifiLazooo extends SugarApp {
 
     static {
         mMainTabs.add(new SlidingTabs.TabItem(
-                        "Home", "This is the very first interaction view, do searches etc.", "!", Home.class, "#F0645A")
+                        "Home", "This is the very first interaction view, do searches etc.", "C", Home.class, "#F0645A")
         );
         mMainTabs.add(new SlidingTabs.TabItem(
                         "Info", "This is the very first interaction view, do searches etc.", "F", Info.class, "#80C8FE")

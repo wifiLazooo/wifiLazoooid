@@ -2,6 +2,9 @@ package com.lazooo.wifi.app.android.data.storage;/**
  * Lazooo copyright 2012
  */
 
+import android.util.Log;
+
+import com.lazooo.wifi.app.android.fragments.Home;
 import com.lazooo.wifi.app.android.utils.GeoPoint;
 import com.lazooo.wifi.app.android.utils.GeoUtils;
 import com.orm.SugarRecord;
@@ -32,7 +35,6 @@ public class LazoooRecord<D> extends SugarRecord<D> {
 
     public LazoooRecord(){
 
-        super();
     }
 
     /**
@@ -42,7 +44,6 @@ public class LazoooRecord<D> extends SugarRecord<D> {
      */
     public LazoooRecord(Date now, GeoPoint currLocation, String lazoooId){
 
-        super();
         this.lazoooId = lazoooId;
         this.lastUpdate = now;
         this.geoLastUpdate = GeoUtils.toString(currLocation);
@@ -50,7 +51,6 @@ public class LazoooRecord<D> extends SugarRecord<D> {
 
     public LazoooRecord(Date now, String currLocation, String lazoooId){
 
-        super();
         this.lazoooId = lazoooId;
         this.lastUpdate = now;
         this.geoLastUpdate = currLocation;
@@ -97,10 +97,16 @@ public class LazoooRecord<D> extends SugarRecord<D> {
 
             if(r.size() > 1){
 
+                r.get(1).delete();
                 throw new StorageRuntimeException("Resource duplicated, same lazoooId");
             }
             return r.get(0);
         }
+    }
+
+    public Long getId(){
+
+        return super.getId();
     }
 
     /**
@@ -115,7 +121,7 @@ public class LazoooRecord<D> extends SugarRecord<D> {
         LazoooRecord<D> r = lazoooFindById(getClass(), getLazoooId());
         if(r != null){
 
-            delete();
+            r.delete();
         }
         save();
         return lazoooId;

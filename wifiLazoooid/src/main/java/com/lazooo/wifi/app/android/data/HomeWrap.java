@@ -9,6 +9,7 @@ import com.lazooo.wifi.app.android.data.api.bean.PublicWifiItem;
 import com.lazooo.wifi.app.android.data.api.bean.Result;
 import com.lazooo.wifi.app.android.data.storage.Action;
 import com.lazooo.wifi.app.android.data.storage.LazoooRecord;
+import com.lazooo.wifi.app.android.data.storage.Media;
 import com.lazooo.wifi.app.android.data.storage.Tip;
 import com.lazooo.wifi.app.android.data.storage.User;
 import com.lazooo.wifi.app.android.utils.GeoPoint;
@@ -113,7 +114,7 @@ public class HomeWrap extends DataWrap {
 
         User user = new User(new Date(), new GeoPoint(2f,2f,2), "LAZOOOID123", "favo");
         user.lazoooSave();
-        Log.e("user", User.lazoooFindById(User.class, "LAZOOOID123").getLazoooId());
+        Log.e("user", User.lazoooFindById(User.class, "LAZOOOID123").userName);
         WifiLazoooService.WifiLazoooServiceFactory.get().wifiSearch(20f, 20f, "", 12, new Callback<Result<PublicWifiItem>>(lPublicActivities));
     }
 

@@ -3,6 +3,7 @@ package com.lazooo.wifi.app.android.data.storage;/**
  */
 
 import com.lazooo.wifi.app.android.utils.GeoPoint;
+import com.orm.SugarRecord;
 
 import java.util.Date;
 
@@ -14,12 +15,17 @@ import java.util.Date;
  * Date: 13/07/14
  * Time: 14:27
  */
-public class Media extends LazoooRecord<Media> {
+public class Media extends SugarRecord<Media> {
+
+    String fava;
+    public Media(){
+    }
     /**
      * @param now          the current time when the api was called to create this instance.
      * @param currLocation the current location when the api was called to create this instance.
      */
-    public Media(Date now, GeoPoint currLocation, String lazoooId) {
-        super(now, currLocation, lazoooId);
+    public Media(String fava) {
+
+        this.fava = fava;
     }
 }
