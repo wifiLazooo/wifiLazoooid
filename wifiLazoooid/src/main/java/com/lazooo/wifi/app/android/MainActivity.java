@@ -24,10 +24,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.lazooo.wifi.app.android.components.SlidingTabs;
 import com.lazooo.wifi.app.android.views.MainPageLayout;
+import com.newrelic.agent.android.NewRelic;
 
 import uk.co.senab.actionbarpulltorefresh.extras.actionbarcompat.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
@@ -43,12 +45,13 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.news_articles);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         slidingTabs = new SlidingTabs();
+        initializeDummy();
         transaction.replace(R.id.sample_content_fragment, slidingTabs);
         transaction.commit();
-        initializeDummy();
     }
 
     public SlidingTabs getSlidingTabs(){
@@ -64,11 +67,9 @@ public class MainActivity extends ActionBarActivity {
     private void initializeDummy(){
 
         mActionBar = getSupportActionBar();
+        WifiLazooo.getApplication().setSupportActionBar(mActionBar);
         mActionBar.setDisplayShowCustomEnabled(true);
         mActionBar.setDisplayShowTitleEnabled(false);
-        mActionBar.setCustomView(WifiLazooo.getApplication().getmTitle(
-                WifiLazooo.getApplication().getmMainTabs().get(0).getName(),
-                WifiLazooo.getApplication().getmMainTabs().get(0).getColor()));
         mMainPageLayout =(MainPageLayout) findViewById(R.id.sample_main_layout);
     }
 
@@ -80,10 +81,10 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
-        //new MenuInflater(getApplication()).inflate(R.menu.main_actions, menu);
+        new MenuInflater(getApplication()).inflate(R.menu.main_actions, menu);
 
-        //MenuInflater inflater = getMenuInflater();
-        //inflater.inflate(R.menu.main_actions, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_actions, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

@@ -34,6 +34,7 @@ import java.util.List;
  * Time: 10:19
  */
 public class Home extends TabFragment {
+
     private static List<HomeSearchItem> quickConnectItems = new LinkedList<HomeSearchItem>();
     private SwipeRefreshLayout swipeRefreshLayout;
     private LinearLayout mainLinearLayout;
@@ -150,6 +151,7 @@ public class Home extends TabFragment {
     @Override
     public void onFragmentSelected() {
         super.onFragmentSelected();
+
         if(isLoading()){
             _startLoadingView();
         }else {

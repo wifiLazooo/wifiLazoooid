@@ -30,9 +30,9 @@ public class TabFragment extends Fragment implements FragmentSelectionChangeList
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         WifiLazooo.getApplication().getSlidingTabs().setCurrentTabFragment(this, getTabPosition());
-        super.onCreate(savedInstanceState);
     }
 
     public boolean isLoading(){
@@ -64,7 +64,8 @@ public class TabFragment extends Fragment implements FragmentSelectionChangeList
 
     @Override
     public void onFragmentSelected() {
-
+        View custom = WifiLazooo.getApplication().getmTitle(getClass().getName());
+        WifiLazooo.getApplication().getActionBar().setCustomView(custom);
         if(isLoading())
             WifiLazooo.getApplication().getSlidingTabs().onStartLoading();
         else

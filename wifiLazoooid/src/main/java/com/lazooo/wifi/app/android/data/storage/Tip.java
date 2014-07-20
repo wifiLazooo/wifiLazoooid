@@ -19,8 +19,8 @@ public class Tip extends LazoooRecord<Tip> {
     static final String DEFAULT = "default";
     static final String LOCATION_DEPENDENT = "location";
     static final String TIME_DEPENDENT = "time";
-    static final String BUTTON = "BUTTON";
-    static final String BUTTON_DEFAULT = "BUTTON_DEFAULT";
+    static final String BUTTON = "button";
+    static final String BUTTON_DEFAULT = "button_default";
 
     String iconBack;
     String iconFront;

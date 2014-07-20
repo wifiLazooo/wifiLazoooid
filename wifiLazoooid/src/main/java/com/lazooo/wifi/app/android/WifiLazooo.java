@@ -4,6 +4,7 @@ package com.lazooo.wifi.app.android;/**
 
 import android.app.Application;
 import android.graphics.Typeface;
+import android.support.v7.app.ActionBar;
 import android.text.Html;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -44,6 +45,8 @@ public class WifiLazooo extends SugarApp {
     private FloatingButton floatingButton;
     private Map<Class, DataWrap> dataWrapMap;
 
+    private ActionBar actionBar;
+
 
     private static final List<SlidingTabs.TabItem> mMainTabs = new LinkedList<SlidingTabs.TabItem>();
 
@@ -76,6 +79,16 @@ public class WifiLazooo extends SugarApp {
         typefaceBariolThin = Typeface.createFromAsset(getAssets(), "fonts/Bariol_Regular.otf");
         dataWrapMap = new HashMap<Class, DataWrap>();
         dataWrapMap.put(HomeWrap.class, new HomeWrap());
+    }
+
+    public ActionBar getActionBar(){
+
+        return actionBar;
+    }
+
+    protected void setSupportActionBar(ActionBar actionBar){
+
+        this.actionBar = actionBar;
     }
 
     public <K extends DataWrap> K getDataWrap(Class<K> cls) {
@@ -128,7 +141,7 @@ public class WifiLazooo extends SugarApp {
         return mMainTabs;
     }
 
-    public View getmTitle(String text, String color){
+    public View getmTitle(String text){
 
         TextView mTitle = new TextView(this);
         //mTitle.setTextColor(getResources().getColor(R.color.brown_background));
@@ -136,7 +149,7 @@ public class WifiLazooo extends SugarApp {
                 LinearLayout.LayoutParams.MATCH_PARENT));
         mTitle.setGravity(Gravity.CENTER_VERTICAL);
         mTitle.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 28);
-        String htmlText = "</font><font color=#FCF3E1>" + text + "</font><font color=" + color + "></font>";
+        String htmlText = "</font><font color=#FCF3E1>" + text + "</font><font color=#FFF></font>";
         mTitle.setText(Html.fromHtml(htmlText));
 
         //mTitle.setText(text);

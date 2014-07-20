@@ -75,8 +75,6 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-        Toast.makeText(getActivity(),"onCreated", Toast.LENGTH_SHORT).show();
-
         mainLayout = (RelativeLayout) view.findViewById(R.id.main_layout);
         mViewPager = (ViewPager) view.findViewById(R.id.viewpager);
         //mViewPager.setPageTransformer(true, new DepthPagerTransformer());
@@ -88,8 +86,8 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
         mTabLayout.setViewPager(mViewPager);
         mTabLayout.populateTabStrip(tabs);
         mTabLayout.setOnPageChangeListener(this);
-        mActionBar.setTitle(tabs.get(0).name);
         mViewPager.setCurrentItem(0);
+        mViewPager.setOffscreenPageLimit(3);
         // END_INCLUDE (setup_slidingtablayout)
     }
 
@@ -136,8 +134,6 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
     @Override
     public void onPageSelected(int position) {
 
-        View custom = WifiLazooo.getApplication().getmTitle(tabs.get(position).getName(), tabs.get(position).getColor());
-        mActionBar.setCustomView(custom);
         TabFragment selected = fragments[position];
         if (current != null && current.getTabPosition() != selected.getTabPosition()){
 
