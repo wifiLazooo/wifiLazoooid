@@ -10,6 +10,7 @@
     <color name="darker_grey">#909090</color>
     <color name="light_blue">#73bfd9</color>
     <color name="wblue_trans">#8880C8FE</color>
+    <color name="semi_trans">#33000000</color>
 
 
     <color name="wred">#F0645A</color>

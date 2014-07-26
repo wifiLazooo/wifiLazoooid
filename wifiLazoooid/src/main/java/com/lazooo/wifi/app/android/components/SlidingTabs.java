@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.lazooo.wifi.app.android.R;
 import com.lazooo.wifi.app.android.WifiLazooo;
+import com.lazooo.wifi.app.android.data.storage.Wifi;
 import com.lazooo.wifi.app.android.fragments.TabFragment;
 import com.lazooo.wifi.app.android.views.HorizontalTabLayout;
 import com.lazooo.wifi.app.android.views.TabLayout;
@@ -69,6 +70,8 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
         mActionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
         //onPageSelected(0);
         View rootView = inflater.inflate(R.layout.fragment_main_tabs, container, false);
+        mViewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
+        mViewPager.setOffscreenPageLimit(3);
         return rootView;
     }
 
@@ -87,7 +90,7 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
         mTabLayout.populateTabStrip(tabs);
         mTabLayout.setOnPageChangeListener(this);
         mViewPager.setCurrentItem(0);
-        mViewPager.setOffscreenPageLimit(3);
+        WifiLazooo.getApplication().getActionBar().setCustomView(WifiLazooo.getApplication().getmTitle(tabs.get(0).getName()));
         // END_INCLUDE (setup_slidingtablayout)
     }
 

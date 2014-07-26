@@ -1,18 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@android:color/darker_gray"
-    android:gravity="center">
+    android:layout_height="match_parent">
 
+    <LinearLayout
+        android:paddingTop="48dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/wblued">
 
-    <TextView
-        android:id="@+id/item_divider_color"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ciao"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/sunset_wifilazooo"/>
+    </LinearLayout>
 
-</LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:paddingTop="200dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_height="1dp"
+                android:layout_width="match_parent"
+                android:background="@color/brown_background"/>
+            <ImageView
+                android:layout_height="700dp"
+                android:layout_width="match_parent"
+                android:background="@color/brown_bar"/>
+
+            </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

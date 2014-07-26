@@ -2,6 +2,7 @@
 <resources>
     <dimen name="actionbar_height">48dp</dimen>
     <dimen name="search_height">100dp</dimen>
+    <dimen name="search_form_height">42dp</dimen>
     <dimen name="actionbar_height_plus">54dp</dimen>
     <dimen name="home_tips_height">200dp</dimen>
     <dimen name="home_tips_height_mid">80dp</dimen>

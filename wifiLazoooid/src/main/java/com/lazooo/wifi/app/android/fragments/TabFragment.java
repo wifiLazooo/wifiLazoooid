@@ -64,7 +64,7 @@ public class TabFragment extends Fragment implements FragmentSelectionChangeList
 
     @Override
     public void onFragmentSelected() {
-        View custom = WifiLazooo.getApplication().getmTitle(getClass().getName());
+        View custom = WifiLazooo.getApplication().getmTitle(getTabName());
         WifiLazooo.getApplication().getActionBar().setCustomView(custom);
         if(isLoading())
             WifiLazooo.getApplication().getSlidingTabs().onStartLoading();

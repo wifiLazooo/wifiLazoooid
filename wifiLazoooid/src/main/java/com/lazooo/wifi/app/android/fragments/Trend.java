@@ -27,6 +27,12 @@ public class Trend extends TabFragment {
         return 2;
     }
 
+
+    public String getTabName(){
+
+        return "Trends";
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

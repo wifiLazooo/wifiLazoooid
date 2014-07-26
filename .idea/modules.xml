@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/wifiLazoooid.iml" filepath="$PROJECT_DIR$/wifiLazoooid.iml" />
-      <module fileurl="file://$PROJECT_DIR$/wifiLazoooid/wifiLazoooid-wifiLazoooid.iml" filepath="$PROJECT_DIR$/wifiLazoooid/wifiLazoooid-wifiLazoooid.iml" />
     </modules>
   </component>
 </project>

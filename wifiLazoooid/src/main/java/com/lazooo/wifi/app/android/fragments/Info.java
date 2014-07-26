@@ -23,6 +23,12 @@ import com.lazooo.wifi.app.android.components.SlidingTabs;
 public class Info extends TabFragment{
 
 
+
+    public String getTabName(){
+
+        return "Info";
+    }
+
     public int getTabPosition(){
 
         return 1;

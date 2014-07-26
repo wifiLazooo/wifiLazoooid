@@ -16,20 +16,27 @@
 package com.lazooo.wifi.app.android;
 
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.WindowCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.lazooo.wifi.app.android.components.SlidingTabs;
+import com.lazooo.wifi.app.android.utils.Logging;
 import com.lazooo.wifi.app.android.views.MainPageLayout;
 import com.newrelic.agent.android.NewRelic;
+
+import java.lang.reflect.Field;
 
 import uk.co.senab.actionbarpulltorefresh.extras.actionbarcompat.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
@@ -45,13 +52,41 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (Build.VERSION.SDK_INT >= 11) {
+            requestFeature();
+        }
+        supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_BAR);
         setContentView(R.layout.news_articles);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         slidingTabs = new SlidingTabs();
-        initializeDummy();
         transaction.replace(R.id.sample_content_fragment, slidingTabs);
         transaction.commit();
+
+        initializeDummy();
+
+    }
+
+    private void requestFeature() {
+        try {
+            Field fieldImpl = ActionBarActivity.class.getDeclaredField("mImpl");
+            fieldImpl.setAccessible(true);
+            Object impl = fieldImpl.get(this);
+
+            Class<?> cls = Class.forName("android.support.v7.app.ActionBarActivityDelegate");
+
+            Field fieldHasActionBar = cls.getDeclaredField("mHasActionBar");
+            fieldHasActionBar.setAccessible(true);
+            fieldHasActionBar.setBoolean(impl, true);
+
+        } catch (NoSuchFieldException e) {
+            Log.e(Logging.LOG_ERROR, e.getLocalizedMessage(), e);
+        } catch (IllegalAccessException e) {
+            Log.e(Logging.LOG_ERROR, e.getLocalizedMessage(), e);
+        } catch (IllegalArgumentException e) {
+            Log.e(Logging.LOG_ERROR, e.getLocalizedMessage(), e);
+        } catch (ClassNotFoundException e) {
+            Log.e(Logging.LOG_ERROR, e.getLocalizedMessage(), e);
+        }
     }
 
     public SlidingTabs getSlidingTabs(){

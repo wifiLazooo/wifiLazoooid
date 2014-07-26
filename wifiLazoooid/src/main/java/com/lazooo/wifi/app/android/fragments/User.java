@@ -27,6 +27,13 @@ public class User extends TabFragment{
         return 3;
     }
 
+
+    public String getTabName(){
+
+        return "User";
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

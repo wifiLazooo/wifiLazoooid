@@ -22,6 +22,10 @@
     <style name="Theme.Wifilazoootheme" parent="@style/Theme.AppCompat.Light">
         <item name="ptrHeaderStyle">@style/Widget.Custom.PtrHeader</item>
         <item name="spbStyle">@style/GNowProgressBar</item>
+        <!-- uncomment to hide actionbar on loading
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowTitleSize">0dp</item>-->
+        <item name="android:windowBackground">@color/brown_background</item>
         <item name="android:actionBarItemBackground">@drawable/selectable_background_wifilazoootheme</item>
         <item name="android:popupMenuStyle">@style/PopupMenu.Wifilazoootheme</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Wifilazoootheme</item>
@@ -60,7 +64,7 @@
     </style>
 
     <style name="Theme.Wifilazoootheme.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColor">@color/wblued</item>
         <item name="android:textSize">19sp</item>
     </style>
 

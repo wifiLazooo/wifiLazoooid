@@ -1,161 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ptr_layout"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/home_big_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ScrollView
+
+    <LinearLayout
+        android:id="@+id/home_main_layout"
+        android:layout_marginTop="@dimen/actionbar_height"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:background="@drawable/favava"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        android:layout_height="0dp">
 
         <LinearLayout
-            android:id="@+id/home_main_layout"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/home_search"
+            android:gravity="center_vertical"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/actionbar_height"
-            android:orientation="vertical">
+            android:layout_height="@dimen/search_form_height"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:padding="8dp"
+            android:background="@drawable/home_search_form"
+            android:orientation="horizontal">
 
+            <TextView
+                android:id="@+id/home_search_title_icon"
+                android:text="3"
+                android:textSize="22sp"
+                android:textColor="#d8d8d8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/search_height"
-                android:background="@color/brown_trasparent"
-                android:gravity="center_vertical">
-
-                <LinearLayout
-                    android:id="@+id/home_search"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:padding="8dp"
-                    android:background="@drawable/home_search_form"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/home_search_title_icon"
-                        android:text="3"
-                        android:textSize="22sp"
-                        android:textColor="#d8d8d8"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:id="@+id/home_search_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="8dp"
-                        android:textColor="#888"
-                        android:textSize="20sp"
-                        android:text="Search wifiLazooo"/>
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/home_quick_connect"
-                android:layout_width="fill_parent"
+            <TextView
+                android:id="@+id/home_search_title"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/home_quick_connect_title"
-                    android:padding="10dp"
-                    android:textSize="17sp"
-                    android:textColor="@color/brown_bar"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="QUICK CONNECT"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/home_tips"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/home_tips_title"
-                    android:padding="10dp"
-                    android:textSize="17sp"
-                    android:textColor="@color/brown_bar"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="LIVE TIPS"/>
-
-                <FrameLayout android:id="@+id/fragment_header_to_replace"
-                    android:layout_width="fill_parent"
-                    android:layout_height="@dimen/home_tips_height"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/home_activities"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/home_activities_title"
-                    android:padding="10dp"
-                    android:textSize="17sp"
-                    android:textColor="@color/brown_bar"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="PUBLIC ACTIVITIES"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:background="@drawable/wl_loader"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Loading"/>
-
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:orientation="vertical">
-
-                <View
-                    android:background="@drawable/home_list_divider"
-                    android:layout_width="wrap_content"
-                    android:layout_height="2dp"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_marginTop="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="wifiLazooo 2014 ©"/>
-
-
-                </LinearLayout>
-            </LinearLayout>
+                android:paddingLeft="8dp"
+                android:textColor="#888"
+                android:textSize="20sp"
+                android:text="Search wifiLazooo"/>
 
         </LinearLayout>
-    </ScrollView>
-</android.support.v4.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ptr_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:clickable="false"
+            android:id="@+id/main_scroll_view"
+            android:layout_alignParentTop="true"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+
+            <LinearLayout
+                android:id="@+id/transparent_placeholder_la"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+
+                <ImageView
+
+                    android:id="@+id/transparent_placeholder"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="#00FFFFFF"/>
+
+
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:background="@color/brown_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <LinearLayout
+                        android:id="@+id/home_quick_connect"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/home_quick_connect_title"
+                            android:padding="10dp"
+                            android:textSize="17sp"
+                            android:textColor="@color/brown_bar"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="QUICK CONNECT"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/home_tips"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/home_tips_title"
+                            android:padding="10dp"
+                            android:textSize="17sp"
+                            android:textColor="@color/brown_bar"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="LIVE TIPS"/>
+
+                        <FrameLayout android:id="@+id/fragment_header_to_replace"
+                            android:layout_width="fill_parent"
+                            android:layout_height="@dimen/home_tips_height"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/home_activities"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/home_activities_title"
+                            android:padding="10dp"
+                            android:textSize="17sp"
+                            android:textColor="@color/brown_bar"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="PUBLIC ACTIVITIES"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:background="@drawable/wl_loader"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Loading"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:orientation="vertical">
+
+                        <View
+                            android:background="@drawable/home_list_divider"
+                            android:layout_width="wrap_content"
+                            android:layout_height="2dp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_marginTop="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="wifiLazooo 2014 ©"/>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</RelativeLayout>
