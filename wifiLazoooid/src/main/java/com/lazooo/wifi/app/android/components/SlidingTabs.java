@@ -94,9 +94,16 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
         // END_INCLUDE (setup_slidingtablayout)
     }
 
+    public void goToTab(int pos){
+
+        mViewPager.setCurrentItem(0);
+    }
+
     public void setCurrentTabFragment(TabFragment tabFragment, int position){
 
         fragments[position] = tabFragment;
+        if(current == null)
+            current = tabFragment;
     }
 
     public void onStartLoading(){
@@ -132,6 +139,11 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+    }
+
+    public TabFragment getCurrentFragment(){
+
+        return current;
     }
 
     @Override
@@ -183,6 +195,7 @@ public class SlidingTabs extends Fragment implements ViewPager.OnPageChangeListe
             Bundle args = new Bundle();
             fragment.setArguments(args);
             fragment.setPagerAdapter(this);
+            slidingTabs.setCurrentTabFragment(fragment, position);
             return fragment;
         }
 

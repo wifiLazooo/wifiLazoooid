@@ -21,9 +21,7 @@ import com.lazooo.wifi.app.android.R;
  * Date: 30/06/14
  * Time: 18:02
  */
-public class Search extends Fragment {
-
-    private ActionBar mActionBar;
+public class SearchResult extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -31,8 +29,6 @@ public class Search extends Fragment {
 
         // The last two arguments ensure LayoutParams are inflated
         // properly.
-        mActionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
-        mActionBar.setCustomView(new EditText(getActivity()));
         View rootView = inflater.inflate(
                 R.layout.fragment_info, container, false);
         return rootView;

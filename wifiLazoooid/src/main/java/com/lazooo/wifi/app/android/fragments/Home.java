@@ -2,16 +2,18 @@ package com.lazooo.wifi.app.android.fragments;/**
  * Lazooo copyright 2012
  */
 
-import android.app.ActionBar;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.ColorFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -22,7 +24,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lazooo.wifi.app.android.MainActivity;
 import com.lazooo.wifi.app.android.R;
+import com.lazooo.wifi.app.android.SearchActivity;
 import com.lazooo.wifi.app.android.WifiLazooo;
 import com.lazooo.wifi.app.android.animations.ResizeAnimation;
 import com.lazooo.wifi.app.android.components.HeaderSlider;
@@ -76,13 +80,11 @@ public class Home extends TabFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(getActivity(), "on create", Toast.LENGTH_SHORT).show();
-
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        initialized = true;
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_header_to_replace, new HeaderSlider());
         transaction.addToBackStack(null);
         transaction.commit();
-
         setLoading(false);
         _initListeners();
         actionBarHeight = getResources().getDimension(R.dimen.actionbar_height);
@@ -94,6 +96,7 @@ public class Home extends TabFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.ptr_layout);
         mainLinearLayout = (LinearLayout) rootView.findViewById(R.id.home_main_layout);
@@ -101,9 +104,6 @@ public class Home extends TabFragment {
         homeSearch = (LinearLayout) rootView.findViewById(R.id.home_search);
         mainScrollView = (ScrollView) rootView.findViewById(R.id.main_scroll_view);
         transPlaceholder = (ImageView) rootView.findViewById(R.id.transparent_placeholder);
-        if(searchDim == null)
-            _initializeDimensions(mainLinearLayout, transPlaceholder, homeSearch);
-
         _stopLoadingView();
         swipeRefreshLayout.setColorScheme(R.color.brown_bar, R.color.wred, R.color.wyellow, R.color.wgreen);
         final Home home = this;
@@ -112,10 +112,10 @@ public class Home extends TabFragment {
             public void onRefresh() {
                 _startLoadingView();
                 _startLoading();
-
                 homeWrap.refresh();
             }
         });
+        _initializeDimensions();
         Bundle args = getArguments();
         _createQuickConnectMenu(rootView);
         _createTipsMenu(rootView);
@@ -124,30 +124,55 @@ public class Home extends TabFragment {
         return rootView;
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+    }
 
-    private void _initializeDimensions(final LinearLayout mainView, final ImageView placeHolder, final LinearLayout homeSearch) {
-        ViewTreeObserver viewTreeObserver = mainView.getViewTreeObserver();
+
+    @Override
+    public void onActivityCreated(Bundle saved) {
+        super.onActivityCreated(saved);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    private void _initializeDimensions() {
+        ViewTreeObserver viewTreeObserver = mainLinearLayout.getViewTreeObserver();
         viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    mainView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    mainLinearLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 } else {
-                    mainView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    mainLinearLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 }
                 searchDim = new SearchDim();
-                searchDim.searchTopMargin = (mainView.getWidth() * 2) / 7;
+                searchDim.searchTopMargin = (mainLinearLayout.getWidth() * 2) / 7;
                 searchDim.placeHeight = searchDim.searchTopMargin + (int) actionBarHeight;;
-                searchDim.mainHeight = (mainView.getWidth() * 5) / 7;
+                searchDim.mainHeight = (mainLinearLayout.getWidth() * 5) / 7;
 
-                mainView.getLayoutParams().height = searchDim.mainHeight;
+                mainLinearLayout.getLayoutParams().height = searchDim.mainHeight;
                 //placeHolder.getLayoutParams().height = searchDim.placeHeight;
-                placeHolder.startAnimation(new ResizeAnimation(placeHolder, placeHolder.getLayoutParams().width, 0, placeHolder.getLayoutParams().width, searchDim.placeHeight));
+                final ResizeAnimation resizeAnimation = new ResizeAnimation(transPlaceholder, transPlaceholder.getLayoutParams().width, transPlaceholder.getLayoutParams().height, transPlaceholder.getLayoutParams().width, searchDim.placeHeight);
+                new Handler().postDelayed(new Runnable() {
+                            public void run() {
+                                transPlaceholder.startAnimation(resizeAnimation);
+                            }
+                        }, 80
+                );
                 ((LinearLayout.LayoutParams) homeSearch.getLayoutParams()).topMargin = (int) ((searchDim.searchTopMargin / 2) - (searchFormHeight / 2));
                 //awake the layout
                 ImageView imageView = new ImageView(getActivity());
-                imageView.setLayoutParams(new LinearLayout.LayoutParams(0,0));
-                linearLayoutScroll.requestLayout();
+                imageView.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
             }
         });
     }
@@ -236,7 +261,7 @@ public class Home extends TabFragment {
             final HomeSearchItem hsi = iter.next();
             View item = ((LayoutInflater) getActivity()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-                    .inflate(R.layout.home_search_item, null, false);
+                    .inflate(R.layout.search_item, null, false);
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -288,18 +313,23 @@ public class Home extends TabFragment {
         titleIcon.setTypeface(WifiLazooo.getApplication().getTypefaceFontello());
     }
 
-    private void onSearchClick(View view, String id) {
+    private void onSearchClick(final View view, String id) {
 
         view.getBackground().setAlpha(128);
         // Create new fragment and transaction
-        Search newFragment = new Search();
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .add(newFragment, "search")
-                        // Add this transaction to the back stack
-                .addToBackStack(null)
-                .commit();
-        getPagerAdapter().notifyDataSetChanged();
-
+        final Intent myIntent = new Intent(getActivity(), SearchActivity.class);
+        if(initialized){
+            getActivity().startActivity(myIntent);
+            getActivity().overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            new Handler().postDelayed(new Runnable() {
+                                          public void run() {
+                                              initialized = true;
+                                              view.getBackground().setAlpha(0);
+                                          }
+                                      }, 200
+            );
+            initialized = false;
+        }
     }
 
 

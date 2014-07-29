@@ -15,14 +15,17 @@
  */
 package com.lazooo.wifi.app.android;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.WindowCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -32,6 +35,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.lazooo.wifi.app.android.components.SlidingTabs;
+import com.lazooo.wifi.app.android.fragments.Home;
 import com.lazooo.wifi.app.android.utils.Logging;
 import com.lazooo.wifi.app.android.views.MainPageLayout;
 import com.newrelic.agent.android.NewRelic;
@@ -95,6 +99,37 @@ public class MainActivity extends ActionBarActivity {
     }
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+        if (Integer.parseInt(android.os.Build.VERSION.SDK) < 5
+                && keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            Log.d(Logging.LOG_DEBUG, "onKeyDown Called");
+            onBackPressed();
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public void onBackPressed() {
+
+        Log.d(Logging.LOG_DEBUG, "onBackPressed Called");
+        FragmentManager fm = getSupportFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+
+            fm.popBackStack();
+        }else if(slidingTabs.getCurrentFragment().getTabPosition() != 0){
+
+            slidingTabs.goToTab(0);
+        }else {
+
+            Intent setIntent = new Intent(Intent.ACTION_MAIN);
+            setIntent.addCategory(Intent.CATEGORY_HOME);
+            setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(setIntent);
+        }
+    }
+
+    @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
@@ -118,8 +153,6 @@ public class MainActivity extends ActionBarActivity {
         // Inflate the menu items for use in the action bar
         new MenuInflater(getApplication()).inflate(R.menu.main_actions, menu);
 
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_actions, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
