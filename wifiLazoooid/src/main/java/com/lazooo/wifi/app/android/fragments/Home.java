@@ -2,34 +2,28 @@ package com.lazooo.wifi.app.android.fragments;/**
  * Lazooo copyright 2012
  */
 
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.ColorFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.lazooo.wifi.app.android.MainActivity;
 import com.lazooo.wifi.app.android.R;
 import com.lazooo.wifi.app.android.SearchActivity;
 import com.lazooo.wifi.app.android.WifiLazooo;
 import com.lazooo.wifi.app.android.animations.ResizeAnimation;
-import com.lazooo.wifi.app.android.components.HeaderSlider;
 import com.lazooo.wifi.app.android.data.HomeWrap;
 import com.lazooo.wifi.app.android.data.NewData;
 import com.lazooo.wifi.app.android.data.storage.Action;
@@ -81,10 +75,6 @@ public class Home extends TabFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initialized = true;
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_header_to_replace, new HeaderSlider());
-        transaction.addToBackStack(null);
-        transaction.commit();
         setLoading(false);
         _initListeners();
         actionBarHeight = getResources().getDimension(R.dimen.actionbar_height);
@@ -98,6 +88,26 @@ public class Home extends TabFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        FrameLayout frameLayout = new FrameLayout(getActivity());
+        frameLayout.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 700));
+        frameLayout.setId(12345);
+        FrameLayout frameLayout2 = new FrameLayout(getActivity());
+        frameLayout2.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 700));
+        frameLayout2.setId(12385);
+        LinearLayout linearLayout = (LinearLayout) rootView.findViewById(R.id.home_tips);
+        FrameLayout frameLayout3 = new FrameLayout(getActivity());
+        frameLayout3.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
+        frameLayout3.setId(434344);
+        linearLayout.addView(frameLayout);
+
+        getFragmentManager().beginTransaction().replace(frameLayout.getId(), new HeaderSlider(), "hdsld1").commit();
+        linearLayout.addView(frameLayout2);
+
+        getFragmentManager().beginTransaction().replace(frameLayout2.getId(), new HeaderSlider(), "kggkgwew").commit();
+        linearLayout.addView(frameLayout3);
+
+        getFragmentManager().beginTransaction().replace(frameLayout3.getId(), new HeaderSlider(), "fsdfds").commit();
+
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.ptr_layout);
         mainLinearLayout = (LinearLayout) rootView.findViewById(R.id.home_main_layout);
         linearLayoutScroll = (LinearLayout) rootView.findViewById(R.id.home_quick_connect);

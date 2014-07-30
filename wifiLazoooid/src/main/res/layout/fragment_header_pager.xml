@@ -3,8 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_margin="10dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
@@ -12,6 +13,14 @@
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
+    <TextView
+        android:layout_alignBottom="@id/pager"
+        android:background="@android:color/white"
+        android:text="absfdoifj dspf j"
+        android:textSize="24sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <!--
     <com.viewpagerindicator.CirclePageIndicator
         android:id="@+id/indicator"
         android:layout_alignParentBottom="@id/pager"
@@ -24,13 +33,16 @@
         app:pageColor="#88CCCCCC"
         app:strokeColor="#000"
         app:strokeWidth="0dp" />
+    -->
 
     <TextView
         android:id="@+id/left_arrow"
         android:layout_marginTop="@dimen/home_tips_height_mid"
+        android:layout_marginLeft="10dp"
         android:layout_width="42dp"
         android:layout_height="42dp"
         android:text="1"
+        android:background="@drawable/rounded_background"
         android:gravity="center"
         android:textSize="20sp"
         android:textColor="@color/wred"
@@ -39,9 +51,11 @@
     <TextView
         android:id="@+id/right_arrow"
         android:layout_marginTop="@dimen/home_tips_height_mid"
+        android:layout_marginRight="10dp"
         android:layout_width="42dp"
         android:layout_height="42dp"
         android:text="2"
+        android:background="@drawable/rounded_background"
         android:gravity="center"
         android:textSize="20sp"
         android:textColor="@color/wred"

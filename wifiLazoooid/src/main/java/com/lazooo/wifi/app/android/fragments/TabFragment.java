@@ -4,16 +4,10 @@ package com.lazooo.wifi.app.android.fragments;/**
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 
-import com.lazooo.wifi.app.android.R;
 import com.lazooo.wifi.app.android.WifiLazooo;
-import com.lazooo.wifi.app.android.components.HeaderSlider;
-import com.lazooo.wifi.app.android.components.SlidingTabs;
 
 /**
  * @author giok57

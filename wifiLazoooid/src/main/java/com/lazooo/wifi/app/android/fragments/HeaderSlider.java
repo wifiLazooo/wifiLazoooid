@@ -1,4 +1,4 @@
-package com.lazooo.wifi.app.android.components;/**
+package com.lazooo.wifi.app.android.fragments;/**
  * Lazooo copyright 2012
  */
 
@@ -39,11 +39,9 @@ public class HeaderSlider extends Fragment {
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) root.findViewById(R.id.pager);
-        mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
+        mPagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager());
         mPager.setAdapter(mPagerAdapter);
-        //Bind the title indicator to the adapter
-        CirclePageIndicator circleIndicator = (CirclePageIndicator)root.findViewById(R.id.indicator);
-        circleIndicator.setViewPager(mPager);
+
         //set up arrows
         setUpRows(root);
         return root;
@@ -101,7 +99,7 @@ public class HeaderSlider extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
-            return new User();
+            return new Trend();
         }
 
         @Override

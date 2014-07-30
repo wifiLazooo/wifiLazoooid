@@ -102,12 +102,7 @@
                             android:textColor="@color/brown_bar"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:text="TIPS FOR YOU"/>
-
-
-                        <FrameLayout android:id="@+id/replace_by_cards"
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/home_tips_height"/>
+                            android:text="QUICK CONNECT"/>
 
                     </LinearLayout>
 
@@ -125,10 +120,6 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:text="LIVE TIPS"/>
-
-                        <FrameLayout android:id="@+id/fragment_header_to_replace"
-                            android:layout_width="fill_parent"
-                            android:layout_height="@dimen/home_tips_height"/>
 
                     </LinearLayout>
 
